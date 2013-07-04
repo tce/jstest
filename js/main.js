@@ -7,6 +7,7 @@ var elements = new Array();
 init();
 animate();
 
+// create a cube and put it in a random x,y position
 function makeCube() {
 
     var cube = new THREE.CubeGeometry( 50, 50, 50);
