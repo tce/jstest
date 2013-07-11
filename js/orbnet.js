@@ -4,6 +4,8 @@ var env, agt;
 var environments = [];
 var agents = [];
 var labels = [];
+var connections = [];
+var pulses = [];
 
 var originX = window.innerWidth / 2;
 var originY = window.innerHeight / 2;
@@ -27,11 +29,20 @@ function init(){
         }
     }
     delEnvironment(5);
+    sendMessage(3, 26);
+    sendMessage(80, 46);
+    sendMessage(32, 95);
+    sendMessage(20, 40);
+    sendMessage(102, 118);
+    sendMessage(40, 70);
+    sendMessage(10, 50);
+    delAgent(27);
+    sendMessage(27, 28);
 
     //controls
     controls = new THREE.TrackballControls(camera);
     selector = new THREE.Projector();
-    document.addEventListener('mousedown', globalMouseDown, false);
+    document.addEventListener('mousedown', globalMouseDown, false);;
     document.addEventListener('keydown', globalKeyDown, false);
     window.addEventListener('resize', globalResize, false);
 
@@ -53,15 +64,29 @@ function animate(){
     //update labels
     for(var i=0; i<labels.length; i++){
         var cur = labels[i];
-            if(cur != null){
+        if(cur != null){
             var env = environments[i];
             vector = new THREE.Vector3();
             projector = new THREE.Projector();
-            projector.projectVector( vector.getPositionFromMatrix( env.matrixWorld ), camera );
-            vector.x = ( vector.x * originX ) + originX;
-            vector.y = - ( vector.y * originY ) + originY;
+            projector.projectVector(vector.getPositionFromMatrix(env.matrixWorld), camera);
+            vector.x = (vector.x * originX) + originX;
+            vector.y = -(vector.y * originY) + originY;
             cur.style.left = vector.x + 'px';
             cur.style.top = vector.y - environmentSize + 'px';
+        }
+    }
+    //update pulses
+    for(var i=0; i<pulses.length; i++){
+        var cur = pulses[i];
+        if(cur != null){
+            if(Math.abs(cur.sinkX - cur.position.x) < 1){
+                cur.position.x = cur.sourceX;
+                cur.position.y = cur.sourceY;
+                cur.position.z = cur.sourceZ;
+            }
+            cur.position.x += (cur.sinkX - cur.position.x) * 0.1;
+            cur.position.y += (cur.sinkY - cur.position.y) * 0.1;
+            cur.position.z += (cur.sinkZ - cur.position.z) * 0.1;
         }
     }
     //update everything else
@@ -77,7 +102,7 @@ function addEnvironment(){
     env.position.y = randomBounds(-universeSize, universeSize);
     env.position.z = randomBounds(-universeSize, universeSize);
     env.material.opacity = 0;
-    env.agentChildren = [];
+    env.agtChildren = [];
     environments.push(env);
     scene.add(env);
     //label
@@ -90,8 +115,10 @@ function addEnvironment(){
 
 function delEnvironment(num){
     var cur = environments[num - 1];
-    for(var i=0; i<cur.agentChildren.length; i++){
-        scene.remove(cur.agentChildren[i]);
+    for(var i=0; i<cur.agtChildren.length; i++){
+        scene.remove(agents[cur.agtChildren[i]]);
+        agents[cur.agtChildren[i]] = null;
+        cur.agtChildren[i] = null;
     }
     scene.remove(cur);
     cur = null;
@@ -101,20 +128,56 @@ function delEnvironment(num){
 }
 
 function addAgent(env){
-    agt = new THREE.Mesh(new THREE.SphereGeometry(4, 1, 1), new THREE.MeshBasicMaterial({color: 0xffffff, overdraw: true, fog: true}));
+    agt = new THREE.Mesh(new THREE.SphereGeometry(4, 1, 1), new THREE.MeshBasicMaterial({color: 0xffffff, overdraw: true}));
     var destination = environments[env];
     agt.position.x = destination.position.x + randomBounds(-environmentSize, environmentSize);
     agt.position.y = destination.position.y + randomBounds(-environmentSize, environmentSize);
     agt.position.z = destination.position.z + randomBounds(-environmentSize, environmentSize);
+    agt.envParent = destination;
+    agt.outgoing = [];
+    agt.incoming = [];
     agents.push(agt);
-    destination.agentChildren.push(agt);
+    destination.agtChildren.push(agents.length - 1);
     scene.add(agt);
 }
 
+function delAgent(num){
+    var cur = agents[num - 1];
+    scene.remove(cur);
+    agents[num - 1] = null;
+}
+
+function sendMessage(snd, rcv){
+    //line
+    var sender = agents[snd - 1];
+    if(sender == null){console.log("sender does not exist"); return;};
+    var receiver = agents[rcv - 1];
+    if(receiver == null){console.log("receiver does not exist"); return;};
+    var path = new THREE.Geometry;
+    path.vertices.push(new THREE.Vector3(sender.position.x, sender.position.y, sender.position.z));
+    path.vertices.push(new THREE.Vector3(receiver.position.x, receiver.position.y, receiver.position.z));
+    path.vertices[0].vertexColors = 0xcccccc;
+    var connection = new THREE.Line(path, new THREE.LineBasicMaterial());
+    sender.outgoing.push(connection);
+    receiver.incoming.push(connection);
+    connections.push(connection);
+    scene.add(connection);
+    //pulse
+    var pulse = new THREE.Mesh(new THREE.CylinderGeometry(2, 3, 3), new THREE.MeshBasicMaterial({color: 0xffffff, overdraw:true}));
+    pulse.position.x = pulse.sourceX = sender.position.x;
+    pulse.position.y = pulse.sourceY = sender.position.y;
+    pulse.position.z = pulse.sourceZ = sender.position.z;
+    pulse.sinkX = receiver.position.x;
+    pulse.sinkY = receiver.position.y;
+    pulse.sinkZ = receiver.position.z;
+    pulses.push(pulse);
+    scene.add(pulse);
+}
+
 function globalResize(event){
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    //camera.aspect = window.innerWidth / window.innerHeight;
+    //camera.updateProjectionMatrix();
+    //renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function globalMouseDown(event){
@@ -128,6 +191,23 @@ function globalMouseDown(event){
         scopePoint(focus.position.x, focus.position.y, focus.position.z);
     }
 }
+
+/*function globalMouseMove(event){
+    event.preventDefault();
+    var selectionVector = new THREE.Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
+    selector.unprojectVector(selectionVector, camera);
+    var selectionRay = new THREE.Raycaster(camera.position, selectionVector.sub(camera.position).normalize());
+    var intersects = selectionRay.intersectObjects(agents);
+    if(intersects.length > 0){
+        var focus = intersects[0].object;
+        for(var i=0; i<focus.outgoing.length; i++){
+            focus.outgoing[i].material = new THREE.LineBasicMaterial({color: 0xFFE83D});
+        }
+        for(var i=0; i<focus.incoming.length; i++){
+            focus.incoming[i].material = new THREE.LineBasicMaterial({color: 0x3DDBFF});
+        }
+    }
+}*/
 
 function globalKeyDown(event){
     switch(event.keyCode){
