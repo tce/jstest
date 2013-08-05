@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body{
+        background: #333333;
+    }
+    .node {
+        cursor: pointer;
+    }
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+    function graph() {
+        this.addNode = function(id, type, children) {
+            nodes.push({"id": id, "type": type, "children" : children});
+            update();
+        }
+
+        this.removeNode = function(id) {
+            var i = 0;
+            var n = findNode(id);
+            while(i < links.length){
+                if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+                else i++;
+            }
+            nodes.splice(findNodeIndex(id), 1);
+            update();
+        }
+
+        this.addLink = function(source, target, value) {
+            links.push({"source": findNode(source), "target": findNode(target), "value": value});
+            update();
+        }
+
+        var findNode = function(id) {
+            for(var i in nodes){ if(nodes[i]["id"] === id) return nodes[i]};
+        }
+
+        var findNodeIndex = function(id) {
+            for (var i in nodes) {if (nodes[i]["id"] === id) return i};
+        }
+
+        var w = 800;
+        var h = 800;
+        var svg = d3.select("body").append("svg")
+                .attr("width", w)
+                .attr("height", h);
+        var g = svg.append("g");
+
+        var force = d3.layout.force();
+        var nodes = force.nodes();
+        var links = force.links();
+
+        var update = function () {
+            var link = g.selectAll(".link")
+                    .data(links, function(d) { return d.source.id + "&" + d.target.id; });
+
+            link.enter().insert("line")
+                    .attr("id",function(d){return d.source.id + "&" + d.target.id;})
+                    .attr("stroke", "white")
+                    .attr("class","link");
+
+            link.exit().remove();
+
+            var node = svg.selectAll(".node")
+                    .data(nodes, function(d){ return d.id });
+
+            var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .call(force.drag);
+
+            nodeEnter.append("image")
+                    .attr("xlink:href",function(d) {
+                        switch(d.type){
+                            case "client": return "icon_client.png";
+                            case "server": return "icon_server.png";
+                            case "router": return "icon_router.png";
+                            case "switch": return "icon_switch.png";
+                            case "abstract": return "icon_abstract.png";
+                            case "agent": return "icon_agent.png";
+                        }
+                    })
+                    .attr("width",40)
+                    .attr("height",40)
+                    .attr("x",-20)
+                    .attr("y",-20)
+                    .attr("id", function(d){ return "Node;" + d.id });
+
+            nodeEnter.append("image")
+                    .attr("xlink:href", function(d) {
+                        if(d.children){
+                            return "icon_environment.png";
+                        }
+                        return null;
+                    })
+                    .attr("width",40)
+                    .attr("height",40)
+                    .attr("x",-20)
+                    .attr("y",-20);
+
+            nodeEnter.append("text")
+                    .text(function(d) { return d.id })
+                    .attr("fill", "white")
+                    .attr("font-size", "8px")
+                    .attr("font-family", "Helvetica")
+                    .attr("dx", 12)
+                    .attr("dy", 0);
+
+            node.exit().remove();
+
+            force.on("tick", function() {
+                link    .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+
+                node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+            });
+
+            force
+                    .linkDistance(50)
+                    .charge(-300)
+                    .size([w, h])
+                    .start();
+        }
+        update();
+    }
+
+    var network = new graph();
+    var nodes;
+    var links;
+
+    d3.json("topology.json", function(json) {
+        nodes = json.nodes;
+        links = json.links;
+        for(var i=0; i<nodes.length; i++){
+            network.addNode(nodes[i].id, nodes[i].type, nodes[i].children);
+            if(nodes[i].children){
+                var childList = nodes[i].children;
+                for(var j=0; j<childList.length; j++){
+                    network.addNode(childList[j].id, "agent");
+                    network.addLink(nodes[i].id, childList[j].id, '0');
+                }
+            }
+        }
+        for(var i=0; i<links.length; i++){
+            network.addLink(links[i].source, links[i].target, links[i].ip);
+        }
+    });
+
+</script>

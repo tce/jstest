@@ -4,11 +4,24 @@
     <list default="true" id="c597e689-5d39-4401-a300-f911c97f0c1c" name="Default" comment="" />
     <ignored path="jstest.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373572123463" ignored="false" />
+    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374185044478" ignored="false" />
     <file path="/orbnet.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373482687603" ignored="false" />
-    <file path="/orbnet.js" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373575157865" ignored="false" />
+    <file path="/orbnet.js" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373639536419" ignored="false" />
     <file path="/tornado.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373477425744" ignored="false" />
     <file path="/tornado.js" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373477436645" ignored="false" />
+    <file path="/index.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373774429803" ignored="false" />
+    <file path="/portfolio.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373668726895" ignored="false" />
+    <file path="/main.css" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374197584900" ignored="false" />
+    <file path="/about.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374106566808" ignored="false" />
+    <file path="/idk.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373670540664" ignored="false" />
+    <file path="/blog.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374193629541" ignored="false" />
+    <file path="/projects.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374104337039" ignored="false" />
+    <file path="/herascream.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204693968" ignored="false" />
+    <file path="/popeska.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204701531" ignored="false" />
+    <file path="/gaz.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204698127" ignored="false" />
+    <file path="/cookiechief.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204708013" ignored="false" />
+    <file path="/drivemycar.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204704967" ignored="false" />
+    <file path="/dearesther.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204539300" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,19 +41,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="orbnet.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/orbnet.html">
+      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="169" selection-start="264" selection-end="264" vertical-scroll-proportion="-3.125">
+            <state line="29" column="16" selection-start="525" selection-end="525" vertical-scroll-proportion="-17.4">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orbnet.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/orbnet.js">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="55" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.5928854">
+            <state line="54" column="70" selection-start="1527" selection-end="1527" vertical-scroll-proportion="-14.791667">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cookiechief.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/cookiechief.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="43" selection-start="357" selection-end="357" vertical-scroll-proportion="0.045725647">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="drivemycar.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/drivemycar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="43" selection-start="357" selection-end="357" vertical-scroll-proportion="-3.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popeska.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/popeska.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="43" selection-start="352" selection-end="352" vertical-scroll-proportion="-3.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gaz.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/gaz.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="43" selection-start="348" selection-end="348" vertical-scroll-proportion="-3.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="herascream.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/herascream.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="43" selection-start="356" selection-end="356" vertical-scroll-proportion="-3.75">
               <folding />
             </state>
           </provider>
@@ -66,18 +124,29 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/tornado.html" />
-        <option value="$PROJECT_DIR$/js/tornado.js" />
-        <option value="$PROJECT_DIR$/js/test.html" />
-        <option value="$PROJECT_DIR$/orbnet.html" />
-        <option value="$PROJECT_DIR$/js/orbnet.js" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/about.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/main.css" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/idk.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/about.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/blog/dearesther.txt" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/blog.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/main.css" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/index.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/index.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/blog/dearesther.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/herascream.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/gaz.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/popeska.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/drivemycar.html" />
+        <option value="$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/cookiechief.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="31" />
+    <option name="y" value="22" />
     <option name="width" value="1867" />
-    <option name="height" value="1160" />
+    <option name="height" value="1178" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -113,48 +182,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jstest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -177,6 +204,13 @@
       <option name="filePath" />
       <option name="scope" value="ALL" />
       <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <list size="0" />
@@ -208,18 +242,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="31" width="1867" height="1160" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1867" height="1178" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20770065" sideWeight="0.6701923" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20770065" sideWeight="0.6710775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289225" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -290,49 +324,73 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/orbnet.html">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="18" selection-start="375" selection-end="376" vertical-scroll-proportion="0.0">
+        <state line="5" column="21" selection-start="153" selection-end="153" vertical-scroll-proportion="0.07591093" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="22" selection-start="1604" selection-end="1604" vertical-scroll-proportion="0.37747034" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/idk.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="4" selection-start="1575" selection-end="1654" vertical-scroll-proportion="0.5991903" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="16" selection-start="525" selection-end="525" vertical-scroll-proportion="-17.4">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/2 PORTFOLIO/index.html">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="33" selection-start="341" selection-end="341" vertical-scroll-proportion="0.10769231" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tornado.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="32" selection-start="282" selection-end="282" vertical-scroll-proportion="0.12145749">
+        <state line="54" column="70" selection-start="1527" selection-end="1527" vertical-scroll-proportion="-14.791667">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/orbnet.html">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/blog/dearesther.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="169" selection-start="264" selection-end="264" vertical-scroll-proportion="-3.125">
+        <state line="13" column="34" selection-start="679" selection-end="679" vertical-scroll-proportion="0.19637462">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/tornado.js">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/herascream.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="4" selection-start="1439" selection-end="1495" vertical-scroll-proportion="0.0">
+        <state line="6" column="43" selection-start="356" selection-end="356" vertical-scroll-proportion="-3.75">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/vendor/three.min.js">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/gaz.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="62" selection-start="75049" selection-end="75053" vertical-scroll-proportion="0.44045174">
+        <state line="6" column="43" selection-start="348" selection-end="348" vertical-scroll-proportion="-3.75">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/orbnet.js">
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/popeska.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="55" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.5928854">
+        <state line="6" column="43" selection-start="352" selection-end="352" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/drivemycar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="43" selection-start="357" selection-end="357" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../XLXMXNT/3 PORTFOLIO/projects/cookiechief.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="43" selection-start="357" selection-end="357" vertical-scroll-proportion="0.045725647">
           <folding />
         </state>
       </provider>

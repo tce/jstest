@@ -1,0 +1,89 @@
+{
+
+    "nodes": [
+        {"id":"VINE","type":"switch"},
+
+        {"id":"HRr","type":"router"},
+        {"id":"HR","type":"switch"},
+        {"id":"HRc1","type":"client","children":[{"id":"a1"},{"id":"a2"}]},
+        {"id":"HRc2","type":"client","children":[{"id":"a3"}]},
+        {"id":"HRc3","type":"client"},
+        {"id":"HRs1","type":"server","children":[]},
+
+        {"id":"ITr","type":"router"},
+        {"id":"IT","type":"switch"},
+        {"id":"ITc1","type":"client"},
+        {"id":"ITc2","type":"client"},
+        {"id":"ITc3","type":"client"},
+        {"id":"ITs1","type":"server"},
+
+        {"id":"REr","type":"router"},
+        {"id":"RE","type":"switch"},
+        {"id":"REc1","type":"client"},
+        {"id":"REc2","type":"client"},
+        {"id":"REc3","type":"client"},
+        {"id":"REs1","type":"server"},
+        {"id":"REs2","type":"server"},
+
+        {"id":"ADr","type":"router"},
+        {"id":"AD","type":"switch"},
+        {"id":"ADc1","type":"client"},
+        {"id":"ADc2","type":"client"},
+        {"id":"ADc3","type":"client"},
+        {"id":"ADs1","type":"server"},
+        {"id":"ADs2","type":"server"},
+
+        {"id":"MAIN","type":"router"},
+        {"id":"WWW","type":"abstract"},
+
+        {"id":"DMr","type":"router"},
+        {"id":"DM","type":"switch"},
+        {"id":"DMs1","type":"server"},
+        {"id":"DMs2","type":"server"},
+        {"id":"DMs3","type":"server"},
+        {"id":"DMs4","type":"server"}
+    ],
+
+    "links": [
+        {"source":"VINE","target":"HRr","ip":"10.1.0.101","sub":16},
+        {"source":"HRr","target":"HR","ip":"172.16.1.1","sub":24},
+        {"source":"HR","target":"HRc1","ip":"172.16.1.101"},
+        {"source":"HR","target":"HRc2","ip":"172.16.1.102"},
+        {"source":"HR","target":"HRc3","ip":"172.16.1.103"},
+        {"source":"HR","target":"HRs1","ip":"172.16.1.100"},
+
+        {"source":"VINE","target":"ITr","ip":"10.1.0.102","sub":16},
+        {"source":"ITr","target":"IT","ip":"172.16.2.1","sub":24},
+        {"source":"IT","target":"ITc1","ip":"172.16.2.101"},
+        {"source":"IT","target":"ITc2","ip":"172.16.2.102"},
+        {"source":"IT","target":"ITc3","ip":"172.16.2.103"},
+        {"source":"IT","target":"ITs1","ip":"172.16.2.100"},
+
+        {"source":"VINE","target":"REr","ip":"10.1.0.103","sub":16},
+        {"source":"REr","target":"RE","ip":"172.16.3.1","sub":24},
+        {"source":"RE","target":"REc1","ip":"172.16.3.102"},
+        {"source":"RE","target":"REc2","ip":"172.16.3.103"},
+        {"source":"RE","target":"REc3","ip":"172.16.3.104"},
+        {"source":"RE","target":"REs1","ip":"172.16.3.100"},
+        {"source":"RE","target":"REs2","ip":"172.16.3.101"},
+
+        {"source":"VINE","target":"ADr","ip":"10.1.0.104","sub":16},
+        {"source":"ADr","target":"AD","ip":"172.16.4.1","sub":24},
+        {"source":"AD","target":"ADc1","ip":"172.16.4.102"},
+        {"source":"AD","target":"ADc2","ip":"172.16.4.103"},
+        {"source":"AD","target":"ADc3","ip":"172.16.4.104"},
+        {"source":"AD","target":"ADs1","ip":"172.16.4.100"},
+        {"source":"AD","target":"ADs2","ip":"172.16.4.101"},
+
+        {"source":"VINE","target":"MAIN","ip":"10.1.0.1","sub":16},
+        {"source":"MAIN","target":"WWW","ip":"10.0.0.1","sub":16},
+
+        {"source":"MAIN","target":"DMr","ip":"10.2.0.101","sub":16},
+        {"source":"DMr","target":"DM","ip":"172.16.5.1","sub":24},
+        {"source":"DM","target":"DMs1","ip":"172.16.5.101"},
+        {"source":"DM","target":"DMs2","ip":"172.16.5.102"},
+        {"source":"DM","target":"DMs3","ip":"172.16.5.103"},
+        {"source":"DM","target":"DMs4","ip":"172.16.5.100"}
+    ]
+
+}
