@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style>
     body{
-        background: #000000;
+        background: #333333;
     }
     .node {
         cursor: pointer;
@@ -11,6 +11,26 @@
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
+
+
+    var w = 800;
+    var h = 800;
+    var svg = d3.select("body").append("svg")
+            .attr("width", w)
+            .attr("height", h);
+    var g = svg.append("g");
+    svg.append("svg:circle")
+            .attr("r",1)
+            .attr("fill","white")
+            .attr("cx",h/2)
+            .attr("cy",w/2);
+
+    var filter = svg.append("defs")
+            .append("filter")
+            .attr("id", "blur")
+            .append("feGaussianBlur")
+            .attr("stdDeviation", 5);
+    var color = d3.scale.category20();
 
     function graph() {
         this.addNode = function(id, type, children) {
@@ -42,13 +62,6 @@
             for (var i in nodes) {if (nodes[i]["id"] === id) return i};
         }
 
-        var w = 800;
-        var h = 800;
-        var svg = d3.select("body").append("svg")
-                .attr("width", w)
-                .attr("height", h);
-        var g = svg.append("g");
-
         var force = d3.layout.force();
         var nodes = force.nodes();
         var links = force.links();
@@ -59,7 +72,8 @@
 
             link.enter().insert("line")
                     .attr("id",function(d){return d.source.id + "&" + d.target.id;})
-                    .attr("stroke", "white")
+                    .attr("stroke", "black")
+                    .attr("filter", "url(#blur)")
                     .attr("class","link");
 
             link.exit().remove();
@@ -71,46 +85,26 @@
                     .attr("class", "node")
                     .call(force.drag);
 
-            nodeEnter.append("image")
-                    .attr("xlink:href",function(d) {
+            nodeEnter.append("circle")
+                    .attr("r",function(d){
                         switch(d.type){
-                            case "client": return "icon_client.png";
-                            case "server": return "icon_server.png";
-                            case "router": return "icon_router.png";
-                            case "switch": return "icon_switch.png";
-                            case "abstract": return "icon_abstract.png";
-                            case "agent": return "icon_agent.png";
+                            case "core": return Math.floor(Math.random() * 7) + 5;
+                            case "comp": return 2;
                         }
                     })
-                    .attr("width",40)
-                    .attr("height",40)
-                    .attr("x",-20)
-                    .attr("y",-20)
+                    .attr("cx",0)
+                    .attr("cy",0)
+                    .attr("fill",function(d,i){
+                        switch(d.type){
+                            case "core": return color(i);
+                            case "comp": return "black";
+                        }
+                    })
                     .attr("id", function(d){ return "Node;" + d.id });
-
-            nodeEnter.append("image")
-                    .attr("xlink:href", function(d) {
-                        if(d.children){
-                            return "icon_environment.png";
-                        }
-                        return null;
-                    })
-                    .attr("width",40)
-                    .attr("height",40)
-                    .attr("x",-20)
-                    .attr("y",-20);
-
-            nodeEnter.append("text")
-                    .text(function(d) { return d.id })
-                    .attr("fill", "white")
-                    .attr("font-size", "8px")
-                    .attr("font-family", "Helvetica")
-                    .attr("dx", 12)
-                    .attr("dy", 0);
 
             node.exit().remove();
 
-            force.on("tick", function() {
+            force.on("tick", function(e) {
                 link    .attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y; })
                         .attr("x2", function(d) { return d.target.x; })
@@ -121,33 +115,36 @@
 
             force
                     .linkDistance(50)
-                    .charge(-300)
+                    .charge(-2)
                     .size([w, h])
                     .start();
         }
         update();
     }
 
-    var network = new graph();
-    var nodes;
-    var links;
+    var service1 = new graph();
+    service1.addNode("s1_core","core",null);
+    service1.addNode("s1_c1","comp",null);
+    service1.addNode("s1_c2","comp",null);
+    service1.addNode("s1_c3","comp",null);
+    service1.addLink("s1_core","s1_c1");
+    service1.addLink("s1_core","s1_c2");
+    service1.addLink("s1_core","s1_c3");
 
-    d3.json("topology.json", function(json) {
-        nodes = json.nodes;
-        links = json.links;
-        for(var i=0; i<nodes.length; i++){
-            network.addNode(nodes[i].id, nodes[i].type, nodes[i].children);
-            if(nodes[i].children){
-                var childList = nodes[i].children;
-                for(var j=0; j<childList.length; j++){
-                    network.addNode(childList[j].id, "agent");
-                    network.addLink(nodes[i].id, childList[j].id, '0');
-                }
-            }
-        }
-        for(var i=0; i<links.length; i++){
-            network.addLink(links[i].source, links[i].target, links[i].ip);
-        }
-    });
+    var service2 = new graph();
+    service1.addNode("s2_core","core",null);
+    service1.addNode("s2_c1","comp",null);
+    service1.addNode("s2_c2","comp",null);
+    service1.addNode("s2_c3","comp",null);
+    service1.addNode("s2_c4","comp",null);
+    service1.addLink("s2_core","s2_c1");
+    service1.addLink("s2_core","s2_c2");
+    service1.addLink("s2_core","s2_c3");
+    service1.addLink("s2_core","s2_c4");
+
+    var service3 = new graph();
+    service1.addNode("s3_core","core",null);
+    service1.addNode("s3_c1","comp",null);
+    service1.addLink("s3_core","s3_c1");
 
 </script>
