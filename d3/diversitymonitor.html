@@ -12,9 +12,11 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+    //for later reference http://bl.ocks.org/MoritzStefaner/1377729
+    //http://stackoverflow.com/questions/10375255/how-to-create-an-outline-for-selected-edges-and-vertices-in-d3-js
 
-    var w = 800;
-    var h = 800;
+    var w = window.innerWidth - 20;
+    var h = window.innerHeight - 20;
     var svg = d3.select("body").append("svg")
             .attr("width", w)
             .attr("height", h);
@@ -22,8 +24,8 @@
     svg.append("svg:circle")
             .attr("r",1)
             .attr("fill","white")
-            .attr("cx",h/2)
-            .attr("cy",w/2);
+            .attr("cx",w/2)
+            .attr("cy",h/2);
 
     var filter = svg.append("defs")
             .append("filter")
@@ -31,6 +33,17 @@
             .append("feGaussianBlur")
             .attr("stdDeviation", 5);
     var color = d3.scale.category20();
+
+    var outerPoints = [{x: w/2, y: 0}, {x: w, y: h/2}, {x: w/2, y: h}, {x: 0, y: h/2}, {x: w/2, y: 0}];
+    var outerFunction = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate("linear");
+    var outerShape = svg.append("path")
+            .attr("d", outerFunction(outerPoints))
+            .attr("stroke", "black")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
 
     function graph() {
         this.addNode = function(id, type, children) {
@@ -62,9 +75,15 @@
             for (var i in nodes) {if (nodes[i]["id"] === id) return i};
         }
 
+        this.addDefense = function(service, x, y) {
+            defenses.push({x: x, y: y, core: findNode(service)});
+            update();
+        }
+
         var force = d3.layout.force();
         var nodes = force.nodes();
         var links = force.links();
+        var defenses = [];
 
         var update = function () {
             var link = g.selectAll(".link")
@@ -77,6 +96,15 @@
                     .attr("class","link");
 
             link.exit().remove();
+
+            var mark = g.selectAll(".mark")
+                    .data(defenses);
+
+            mark.enter().insert("line")
+                    .attr("stroke","white")
+                    .attr("class","mark");
+
+            mark.exit().remove();
 
             var node = svg.selectAll(".node")
                     .data(nodes, function(d){ return d.id });
@@ -110,6 +138,11 @@
                         .attr("x2", function(d) { return d.target.x; })
                         .attr("y2", function(d) { return d.target.y; });
 
+                mark    .attr("x1", function(d) { return d.core.x; })
+                        .attr("y1", function(d) { return d.core.y; })
+                        .attr("x2", function(d) { return (d.core.x - d.x) * ((w/2 - d.core.x) * 0.005) + d.core.x; })
+                        .attr("y2", function(d) { return (d.core.y - d.y) * ((h/2 - d.core.y) * 0.005) + d.core.y; });
+
                 node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
             });
 
@@ -122,29 +155,32 @@
         update();
     }
 
-    var service1 = new graph();
-    service1.addNode("s1_core","core",null);
-    service1.addNode("s1_c1","comp",null);
-    service1.addNode("s1_c2","comp",null);
-    service1.addNode("s1_c3","comp",null);
-    service1.addLink("s1_core","s1_c1");
-    service1.addLink("s1_core","s1_c2");
-    service1.addLink("s1_core","s1_c3");
+    var system1 = new graph();
+    system1.addNode("s1_core","core",null);
+    system1.addNode("s1_c1","comp",null);
+    system1.addNode("s1_c2","comp",null);
+    system1.addNode("s1_c3","comp",null);
+    system1.addLink("s1_core","s1_c1");
+    system1.addLink("s1_core","s1_c2");
+    system1.addLink("s1_core","s1_c3");
+    system1.addDefense("s1_core",500,200);
+    system1.addDefense("s1_core",700,300);
 
     var service2 = new graph();
-    service1.addNode("s2_core","core",null);
-    service1.addNode("s2_c1","comp",null);
-    service1.addNode("s2_c2","comp",null);
-    service1.addNode("s2_c3","comp",null);
-    service1.addNode("s2_c4","comp",null);
-    service1.addLink("s2_core","s2_c1");
-    service1.addLink("s2_core","s2_c2");
-    service1.addLink("s2_core","s2_c3");
-    service1.addLink("s2_core","s2_c4");
+    system1.addNode("s2_core","core",null);
+    system1.addNode("s2_c1","comp",null);
+    system1.addNode("s2_c2","comp",null);
+    system1.addNode("s2_c3","comp",null);
+    system1.addNode("s2_c4","comp",null);
+    system1.addLink("s2_core","s2_c1");
+    system1.addLink("s2_core","s2_c2");
+    system1.addLink("s2_core","s2_c3");
+    system1.addLink("s2_core","s2_c4");
 
     var service3 = new graph();
-    service1.addNode("s3_core","core",null);
-    service1.addNode("s3_c1","comp",null);
-    service1.addLink("s3_core","s3_c1");
+    system1.addNode("s3_core","core",null);
+    system1.addNode("s3_c1","comp",null);
+    system1.addLink("s3_core","s3_c1");
+    system1.addDefense("s3_core",500,500);
 
 </script>

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c597e689-5d39-4401-a300-f911c97f0c1c" name="Default" comment="" />
+    <list default="true" id="c597e689-5d39-4401-a300-f911c97f0c1c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/diversitymonitor.html" afterPath="$PROJECT_DIR$/d3/diversitymonitor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="jstest.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1377536429177" ignored="false" />
+    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1377874890358" ignored="false" />
     <file path="/orbnet.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373482687603" ignored="false" />
     <file path="/orbnet.js" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373639536419" ignored="false" />
     <file path="/tornado.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373477425744" ignored="false" />
@@ -22,7 +25,7 @@
     <file path="/cookiechief.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204708013" ignored="false" />
     <file path="/drivemycar.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204704967" ignored="false" />
     <file path="/dearesther.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1374204539300" ignored="false" />
-    <file path="/diversitymonitor.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1377540881444" ignored="false" />
+    <file path="/diversitymonitor.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1377887755473" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +48,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d3/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="77" selection-start="46" selection-end="46" vertical-scroll-proportion="-1.25">
+            <state line="108" column="35" selection-start="3707" selection-end="3707" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -54,7 +57,7 @@
       <file leaf-file-name="index2.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d3/index2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -63,7 +66,7 @@
       <file leaf-file-name="index3.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d3/index3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="-3.75">
+            <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,7 +75,7 @@
       <file leaf-file-name="diversitymonitor.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/d3/diversitymonitor.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="130" selection-start="356" selection-end="356" vertical-scroll-proportion="0.2833002">
+            <state line="45" column="31" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.6617647">
               <folding />
             </state>
           </provider>
@@ -118,9 +121,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1869" />
-    <option name="height" value="1178" />
+    <option name="x" value="4" />
+    <option name="y" value="1088" />
+    <option name="width" value="1874" />
+    <option name="height" value="1192" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -237,13 +241,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1869" height="1178" extended-state="6" />
+    <frame x="4" y="1088" width="1874" height="1192" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20747562" sideWeight="0.6710775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20637493" sideWeight="0.6710775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289225" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -319,6 +323,13 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/d3/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/d3/index2.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -328,21 +339,63 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/index3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="-3.75">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/d3/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="77" selection-start="46" selection-end="46" vertical-scroll-proportion="-1.25">
+        <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/diversitymonitor.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="130" selection-start="356" selection-end="356" vertical-scroll-proportion="0.2833002">
+        <state line="137" column="149" selection-start="4529" selection-end="4529" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="77" selection-start="46" selection-end="46" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="35" selection-start="3707" selection-end="3707" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="28" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/diversitymonitor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="31" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.6617647">
           <folding />
         </state>
       </provider>
