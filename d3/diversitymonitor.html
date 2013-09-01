@@ -19,8 +19,23 @@
     var h = window.innerHeight - 20;
     var svg = d3.select("body").append("svg")
             .attr("width", w)
-            .attr("height", h);
-    var g = svg.append("g");
+            .attr("height", h)
+            .append("g")
+            .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", redraw))
+
+
+     var g = svg.append("g");
+
+
+
+    function redraw()
+    {
+          console.log("here", d3.event.translate, d3.event.scale);
+          svg.attr("transform",
+                   "translate(" + d3.event.translate + ")"
+                 + " scale(" + d3.event.scale + ")");
+    }
+
     svg.append("svg:circle")
             .attr("r",1)
             .attr("fill","white")
