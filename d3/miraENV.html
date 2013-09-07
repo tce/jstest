@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media = "screen">
+</head>
+<meta charset="utf-8">
+<style>
+    body {
+        background-color: #000000;
+        font-family: "Lato" , Helvetica, sans-serif;
+        font-size: 12px;
+    }
+    .btn-group {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .node {
+        cursor: pointer;
+        hand: pointer;
+    }
+</style>
+<body>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<div class="btn-group">
+    <button class="btn btn-mini btn-primary" type="button" id="btn_defa"><i class="icon-remove"></i></button>
+    <button class="btn btn-mini btn-primary" type="button" id="btn_sort"><i class="icon-th"></i></button>
+    <button class="btn btn-mini btn-primary" type="button" id="btn_topo"><i class="icon-asterisk"></i></button>
+</div>
+
+<script>
+
+    var w = window.innerWidth - 60;
+    var h = window.innerHeight - 60;
+    var color = d3.scale.category20();
+    var svg = d3.select("body").append("svg")
+            .attr("width", w)
+            .attr("height", h);
+    var g = svg.append("g");
+
+    function network() {
+        var force = d3.layout.force();
+        var devices = force.nodes();
+        var routes = force.links();
+
+        this.addDevice = function(type, id) {
+            devices.push({"type": type, "id": id});
+            update();
+        }
+
+        this.removeDevice = function(id) {
+            var i = 0;
+            var n = findDevice(id);
+            /*while(i < links.length){
+                if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+                else i++;
+            }*/
+            devices.splice(findDeviceIndex(id), 1);
+            update();
+        }
+
+        this.addRoute = function(source, target, label) {
+            routes.push({"source": findDevice(source), "target": findDevice(target), "label": label});
+            update();
+        }
+
+        this.getDevice = function(id) {
+            for(var i in devices){ if(devices[i]["id"] === id) return devices[i]};
+        }
+
+        var findDevice = function(id) {
+            for(var i in devices){ if(devices[i]["id"] === id) return devices[i]};
+        }
+
+        var findDeviceIndex = function(id) {
+            for (var i in devices) {if (devices[i]["id"] === id) return i};
+        }
+
+        var update = function() {
+            var device = svg.selectAll(".device")
+                    .data(devices,function(d){ return d.id })
+
+            var deviceEnter = device.enter().append("g")
+                    .attr("class","device")
+                    .call(force.drag)
+                    .attr("id",function(d){ return d.id });
+
+            deviceEnter.append("image")
+                    .attr("xlink:href",function(d) {
+                        switch(d.type){
+                            case "client": return "icon_client.png";
+                            case "server": return "icon_server.png";
+                            case "router": return "icon_router.png";
+                            case "switch": return "icon_switch.png";
+                            case "abstract": return "icon_abstract.png";
+                        }
+                    })
+                    .attr("width",40)
+                    .attr("height",40)
+                    .attr("x",-20)
+                    .attr("y",-20);
+
+            device.exit().remove();
+
+            force.on("tick", function(e) {
+                device  .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+            })
+
+            force
+                    .charge(-300)
+                    .size([w,h])
+                    .start();
+        }
+        update();
+    }
+
+    var network = new network();
+    function showNetwork() {
+        d3.json("topology.json", function(json) {
+            var devices = json.nodes;
+            var routes = json.links;
+            for(var i=0; i<devices.length; i++){
+                network.addDevice(devices[i].type, devices[i].id);
+            }
+            for(var i=0; i<routes.length; i++){
+                network.addRoute(routes[i].source, routes[i].target, routes[i].ip);
+            }
+        });
+    }
+    function hideNetwork() {
+        d3.json("topology.json", function(json) {
+            var devices = json.nodes;
+            var routes = json.links;
+            for(var i=0; i<devices.length; i++){
+                network.removeDevice(devices[i].type, devices[i].id);
+            }
+            /*for(var i=0; i<routes.length; i++){
+                network.addRoute(routes[i].source, routes[i].target, routes[i].ip);
+            }*/
+        });
+    }
+
+    function graph() {
+        var force = d3.layout.force();
+        var nodes = force.nodes();
+        var links = force.links();
+        var sort = false;
+        var topo = false;
+
+        d3.select("#btn_defa")
+                .on("click", function(){
+                    sort = false;
+                    topo = false;
+                    hideNetwork();
+                    update();
+                })
+        d3.select("#btn_sort")
+                .on("click", function(){
+                    if(!sort){
+                        sort = true;
+                        topo = false;
+                        hideNetwork();
+                    }else{
+                        sort = false;
+                    }
+                    update();
+                })
+        d3.select("#btn_topo")
+                .on("click", function(){
+                    if(!topo){
+                        topo = true;
+                        showNetwork();
+                        sort = false;
+                    }else{
+                        topo = false;
+                        hideNetwork();
+                    }
+                    update();
+                })
+
+        this.addNode = function(id,device) {
+            nodes.push({"id": id, "device": device, "expanded": false});
+            update();
+        }
+
+        this.removeNode = function(id) {
+            var i = 0;
+            var n = findNode(id);
+            while(i < links.length){
+                if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+                else i++;
+            }
+            nodes.splice(findNodeIndex(id), 1);
+            update();
+        }
+
+        this.addLink = function(source, target, value) {
+            links.push({"source": findNode(source), "target": findNode(target), "value": value});
+            update();
+        }
+
+        var findNode = function(id) {
+            for(var i in nodes){ if(nodes[i]["id"] === id) return nodes[i]};
+        }
+
+        var findNodeIndex = function(id) {
+            for (var i in nodes) {if (nodes[i]["id"] === id) return i};
+        }
+
+        var update = function () {
+            var link = g.selectAll(".link")
+                    .data(links, function(d) { return d.source.id + "&" + d.target.id; });
+
+            link.enter().insert("line")
+                    .attr("id",function(d){return d.source.id + "&" + d.target.id;})
+                    .attr("stroke",function(d){
+                        return color(findNodeIndex(d.source.id));
+                    })
+                    .attr("stroke-width",5)
+                    .attr("class","link");
+
+            link.transition().delay(function(d){ return d.value }).remove(); //optional remove on timer
+
+            link.exit().remove();
+
+            var node = svg.selectAll(".node")
+                    .data(nodes, function(d){ return d.id });
+
+            var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .call(force.drag);
+
+            nodeEnter.append("rect")
+                    .attr("id",function(d) { return d.id + "_window"; })
+                    .attr("y",-7)
+                    .attr("width",14)
+                    .attr("height",14)
+                    .attr("fill","white")
+                    .attr("opacity",0);
+
+            nodeEnter.append("rect")
+                    .attr("width",20)
+                    .attr("height",20)
+                    .attr("x",-10)
+                    .attr("y",-10)
+                    .attr("transform","rotate(45)")
+                    .attr("fill",function(d,i){ return color(i) })
+                    .attr("id", function(d){ return "Node;" + d.id })
+                    .on("click",function(d){
+                        if(d3.event.altKey){
+                            if(!d.expanded){
+                                d3.select(this).transition().attr("transform","rotate(0)");
+                                d3.select("#" + d.id + "_window")
+                                        .transition().delay(200).attr("opacity",1)
+                                        .attr("width",80);
+                                d.expanded = true;
+                            }else{
+                                d3.select("#" + d.id + "_window")
+                                        .transition().attr("width",20)
+                                        .attr("opacity",0);
+                                d3.select(this).transition().delay(200).attr("transform","rotate(45)");
+                                d.expanded = false;
+                            }
+                            force.start();
+                        }
+                    });
+
+            node.exit().remove();
+
+            force.on("tick", function(e) {
+                link    .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+
+                if(sort){
+                    var k = e.alpha * 0.1;
+                    nodes.forEach(function(o,i) {
+                        o.x += (100 + i * 100 - o.x) * k;
+                        o.y += (h / 2 - o.y) * k;
+                    });
+                }
+                if(topo){
+                    var k = e.alpha * 0.1;
+                    nodes.forEach(function(o,i) {
+                        if(network.getDevice(o.device) != null){
+                            o.x += (network.getDevice(o.device).x - o.x) * k;
+                            o.y += (network.getDevice(o.device).y - o.y) * k;
+                        }
+                    });
+                }
+
+                node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+            });
+
+
+            if(!sort && !topo){
+                force
+                        .linkStrength(1)
+                        .linkDistance(50)
+                        .gravity(0.1)
+                        .charge(function(d){
+                                if(!d.expanded){
+                                    return -100;
+                                }else{
+                                    return -400;
+                                }
+                            })
+                        .size([w,h])
+                        .start();
+            }else{
+                force
+                        .linkStrength(0)
+                        .linkDistance(50)
+                        .gravity(0)
+                        .charge(null)
+                        .size([w,h])
+                        .start();
+            }
+        }
+        update();
+    }
+
+    var graph = new graph();
+    graph.addNode("env1","HRc1");
+    graph.addNode("env2","HRc2");
+    graph.addNode("env3","HRs1");
+    graph.addNode("env4","REs2");
+    graph.addNode("env5","ADr");
+    graph.addLink("env1","env5");
+
+
+
+
+
+</script>
