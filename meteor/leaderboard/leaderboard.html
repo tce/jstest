@@ -1,0 +1,72 @@
+<head>
+  <title>Leaderboard</title>
+</head>
+
+<body>
+  {{> headerBarTemplate }}
+  {{> mainbody}}
+  {{> footerBarTemplate }}
+</body>
+
+<template name="mainbody">
+    <div id="d3-area"><svg></svg></div>
+    <div id="outer">
+        {{> leaderboard}}
+    </div>
+</template>
+
+<template name="leaderboard">
+  <div class="leaderboard">
+    {{#each env}}
+      {{> env}}
+    {{/each}}
+  </div>
+
+  {{#if selected_name}}
+  <div class="details">
+    <div class="name">{{selected_name}}</div>
+      {{#each agt}}
+        {{> agt}}
+      {{/each}}
+    <input type="button" class="inc" value="Add 5 agents" />
+  </div>
+  {{/if}}
+
+  {{#unless selected_name}}
+  <div class="none">Click an Environment to select</div>
+  {{/unless}}
+</template>
+
+<template name="env">
+  <div class="env {{selected}}">
+    <span class="name">{{name}}</span>
+    <span class="numAgents">{{numAgents}}</span>
+  </div>
+</template>
+
+<template name="agt">
+    <div class="agt">
+        <span class="name">{{name}}</span>
+        <span class="type">{{type}}</span>
+        <span class="processing">{{processing}}</span>
+    </div>
+</template>
+
+
+<template name="headerBarTemplate">
+    <div id="headerBar" data-role="header" data-theme="none">
+        <ul class="nav-bar header-nav-bar">
+            <li><a id="homePageLink" href="http://163.118.78.64:8080/vine">VINE</a></li>
+            <li><a id="breadCrumbLink" href="#"></a></li>
+        </ul>
+    </div>
+</template>
+<template name="footerBarTemplate">
+    <div id="footerActionBar" data-role="footer" data-theme="none" class="nav-bar bottom-anchor">
+        <ul class="nav-bar footer-nav-bar ">
+            <li><a href="#" onclick='Session.set("selected_graph","sunburst");'><span class="pictographs">4  </span>Sunburst Chart</a></li>
+            <li><a href="#" onclick='Session.set("selected_graph","forceDirectGraph");'><span class="pictographs">4  </span>Force-Link Graph Chart</a></li>
+            <li><a href="#" onclick='Session.set("selected_graph","collapsibleTreeChart");'><span class="pictographs">4  </span>Collapsible Tree Chart</a></li>
+        </ul>
+    </div>
+</template>
