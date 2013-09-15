@@ -25,7 +25,7 @@ body {
     padding: 5px;
 }
 
-.env .name {
+.env .mira_label {
     display: inline-block;
     width: 300px;
     font-size: 1.75em;
@@ -52,13 +52,13 @@ body {
 
 }
 
-.agt .type {
+.agt .hostid {
     display: inline-block;
     width: 100px;
     font-size: 0.6em;
 }
 
-.agt .processing {
+.agt .createid {
     display: inline-block;
     width: 100px;
     text-align: right;
