@@ -45,20 +45,20 @@ body {
     padding: 5px;
 }
 
-.agt .name {
+.agt .agent_name {
     display: inline-block;
     width: 250px;
     font-size:0.6em
 
 }
 
-.agt .hostid {
+.agt .host_env_name {
     display: inline-block;
     width: 100px;
     font-size: 0.6em;
 }
 
-.agt .createid {
+.agt .create_env_name {
     display: inline-block;
     width: 100px;
     text-align: right;
