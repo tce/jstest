@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c597e689-5d39-4401-a300-f911c97f0c1c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/d3/miraENV.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icon_abstract.png" afterPath="$PROJECT_DIR$/d3/icon_abstract.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icon_client.png" afterPath="$PROJECT_DIR$/d3/icon_client.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icon_router.png" afterPath="$PROJECT_DIR$/d3/icon_router.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icon_server.png" afterPath="$PROJECT_DIR$/d3/icon_server.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icon_switch.png" afterPath="$PROJECT_DIR$/d3/icon_switch.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/d3/icons.fla" afterPath="$PROJECT_DIR$/d3/icons.fla" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="jstest.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1378565846994" ignored="false" />
+    <file path="/Dummy.txt" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1378828953862" ignored="false" />
     <file path="/orbnet.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373482687603" ignored="false" />
     <file path="/orbnet.js" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373639536419" ignored="false" />
     <file path="/tornado.html" changelist="c597e689-5d39-4401-a300-f911c97f0c1c" time="1373477425744" ignored="false" />
@@ -54,35 +47,7 @@
     <favorites_list name="jstest" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="miraENV.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/d3/miraENV.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="288" column="51" selection-start="10441" selection-end="10441" vertical-scroll-proportion="0.46011674">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="topology.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/d3/topology.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/d3/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="27" selection-start="4196" selection-end="4196" vertical-scroll-proportion="-18.458334">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -122,9 +87,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="1080" />
-    <option name="width" value="1920" />
-    <option name="height" value="1200" />
+    <option name="y" value="22" />
+    <option name="width" value="1868" />
+    <option name="height" value="1178" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -193,11 +158,11 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Eye Chart" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../XLXMXNT/0 PORTFOLIO" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -260,13 +225,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="1080" width="1920" height="1200" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1868" height="1178" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1839747" sideWeight="0.6710775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18373984" sideWeight="0.6710775" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289225" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -406,16 +371,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../EyeDoppler/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="58" selection-start="5530" selection-end="5530" vertical-scroll-proportion="0.13424124">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/d3/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="27" selection-start="4196" selection-end="4196" vertical-scroll-proportion="-18.458334">
-          <folding />
-        </state>
+        <state line="159" column="58" selection-start="5530" selection-end="5530" vertical-scroll-proportion="0.13424124" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/topology.json">
@@ -427,7 +383,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/miraENV.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="288" column="51" selection-start="10441" selection-end="10441" vertical-scroll-proportion="0.46011674">
+        <state line="288" column="51" selection-start="10441" selection-end="10441" vertical-scroll-proportion="0.18986084">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="27" selection-start="4196" selection-end="4196" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
