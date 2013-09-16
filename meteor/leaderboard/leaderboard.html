@@ -4,15 +4,27 @@
 
 <body>
   {{> headerBarTemplate }}
+  {{> constellation }}
   {{> mainbody}}
+  {{> cubegraphs}}
   {{> footerBarTemplate }}
 </body>
 
+<template name="constellation">
+    <dev id="constellation-area"><svg></svg></dev>
+</template>
+
+
 <template name="mainbody">
     <div id="d3-area"><svg></svg></div>
+    <dev id="cube-area"><svg></svg></dev>
     <div id="outer">
         {{> leaderboard}}
     </div>
+</template>
+
+<template name="cubegraphs">
+    <dev id="cube-area"><svg></svg></dev>
 </template>
 
 <template name="leaderboard">

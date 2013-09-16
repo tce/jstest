@@ -227,3 +227,8 @@ ul.inline-list > li{
     top: 0px;
     z-index: -1;
 }
+
+.node {
+    cursor: pointer;
+    hand: pointer;
+}
