@@ -22,36 +22,98 @@
 
 <script>
 
-    var w = window.innerWidth - 60;
-    var h = window.innerHeight - 60;
+    var w = window.innerWidth - 10;
+    var h = window.innerHeight - 10;
+    var radius = h*0.6;
     var color = d3.scale.category20();
+    var rings = d3.scale.category20c()
     var svg = d3.select("body").append("svg")
             .attr("width", w)
             .attr("height", h);
-    var g = svg.append("g");
+    var g = svg.append("g")
+            .attr("transform","translate(" + w/2 + "," + h/2 + ")");
     var environments = [];
     var sectors = [0];
+    var segments = [];
+
+    var arc = d3.svg.arc();
+
+//    var segment = g.append("path")
+//            .datum({endAngle: 90})
+//            .style("fill","white")
+//            .attr("d",arc);
+
+    setInterval(function(){
+
+        var cur;
+        var n = 0;
+        var region;
+        for(layer=0; layer<3; layer++){
+            cur = environments[n].path[layer];
+            region = (radius * 0.65) + 17 * (5 - (layer + 1));
+            segments[n] = g.append("path")
+                    .datum({innerRadius: region, outerRadius: region*1.04, startAngle: Math.PI/2, endAngle: Math.PI/2})
+                    .style("fill",rings(n))
+                    .attr("d",arc);
+            var start = Math.PI/2;
+            var end = Math.PI/2;
+            for(var j=0; j<environments.length; j++){
+                if(cur != environments[j].path[layer]){
+                    end = sectors[j] + Math.PI/2;
+                    segments[n].transition().duration(2000).call(arcTween, end);
+                    cur = environments[j].path[layer];
+                    start = end;
+                    n++;
+                    segments[n] = g.append("path")
+                            .datum({innerRadius: region, outerRadius: region*1.04, startAngle: start, endAngle: end})
+                            .style("fill",rings(n))
+                            .attr("d",arc);
+                }
+            }
+            end = sectors[j] + Math.PI/2;
+            segments[n].transition().duration(2000).call(arcTween, end);
+            n++;
+        }
+
+    },1000);
+
+    function arcTween(transition, newAngle) {
+        transition.attrTween("d",function(d){
+            var interpolate = d3.interpolate(d.endAngle, newAngle);
+            return function(t) {
+                d.endAngle = interpolate(t);
+                return arc(d);
+            }
+        })
+    }
 
     function graph() {
         var force = d3.layout.force();
         var nodes = force.nodes();
         var links = force.links();
 
-        this.addEnvironment = function(id, ip) {
+        this.addEnvironment = function(name, ip) {
+            var path = ip.split(".");
+            path.splice(path.length-1,1);
             for(var i=0; i<environments.length; i++){
-                if(ip < environments[i].ip){
-                    environments.splice(i,0,{"id": id, "ip": ip, "agents": []});
-                    return;
+                for(var j=0; j<path.length; j++){
+                    if(path[j] > environments[i].path[j]){
+                        break;
+                    }else
+                    if(path[j] < environments[i].path[j]){
+                        environments.splice(i,0,{"id": name, "path": path, "agents": []});
+                        return;
+                    }
                 }
             }
-            environments.push({"id": id, "ip": ip, "agents": []});
+            environments.push({"id": name, "path": path, "agents": []});
         }
 
         this.addAgent = function(id, env) {
             if(typeof env != "number"){
                 env = findEnvironmentIndex(env) + 1;
             };
-            nodes.push({"id": id, "env": env, "ith": environments[env].agents.length + 1});
+            nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1});
             environments[env].agents.push(findAgent(id));
             update();
         }
@@ -128,7 +190,7 @@
             }
 
             var label = svg.selectAll(".label")
-                    .data(environments, function(d,i){ return i });
+                    .data(environments);
 
             label.enter().append("text")
                     .text(function(d,i){ return "♦ENV" + i })
@@ -145,18 +207,18 @@
                         .attr("x2", function(d) { return d.target.x; })
                         .attr("y2", function(d) { return d.target.y; });
 
-                var monitoredValue = 500;
+                var monVal = 0;
 
                 var k = e.alpha * 0.1;
                 nodes.forEach(function(o,i) {
-                    o.x += (w / 2 + Math.cos(sectors[o.env] + (o.ith / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * monitoredValue - o.x) * k;
-                    o.y += (h / 2 + Math.sin(sectors[o.env] + (o.ith / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * monitoredValue - o.y) * k;
+                    o.x += (w / 2 + Math.cos(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.x) * k;
+                    o.y += (h / 2 + Math.sin(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.y) * k;
                 });
 
                 node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
-                label   .attr("x",function(d,i){ return w/2 + Math.cos((sectors[i] + sectors[i+1]) / 2) * 300 })
-                        .attr("y",function(d,i){ return h/2 + Math.sin((sectors[i] + sectors[i+1]) / 2) * 300 })
+                label   .attr("x",function(d,i){ return w/2 + Math.cos((sectors[i] + sectors[i+1]) / 2) * (radius * 0.6) })
+                        .attr("y",function(d,i){ return h/2 + Math.sin((sectors[i] + sectors[i+1]) / 2) * (radius * 0.6) })
             });
 
 
@@ -172,25 +234,30 @@
 
     var graph = new graph();
 
-    graph.addEnvironment("blue",3); //normally id and parent ip would be easily extracted from same string, like .101 <-- --> 172.16.1
-    graph.addEnvironment("light",2);
-    graph.addEnvironment("orange",2);
-    graph.addEnvironment("tan",1);
+    graph.addEnvironment("first","172.16.2.101");
+    graph.addEnvironment("second","172.16.1.101");
+    graph.addEnvironment("third","172.16.2.102");
+    graph.addEnvironment("fourth","172.16.1.102");
+    graph.addEnvironment("fifth","200.1");
 
     for(var i=0; i<21; i++){
-        graph.addAgent(i,"blue");
+        graph.addAgent(i,"first");
     }
 
     for(var i=21; i<28; i++){
-        graph.addAgent(i,"light");
+        graph.addAgent(i,"second");
     }
 
     for(var i=28; i<100; i++){
-        graph.addAgent(i,"orange");
+        graph.addAgent(i,"third");
     }
 
     for(var i=100; i<150; i++){
-        graph.addAgent(i,"tan");
+        graph.addAgent(i,"fourth");
     }
+
+    graph.addAgent("green guy","fifth");
+
+    console.log(environments);
 
 </script>
