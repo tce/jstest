@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body{
+        background: #333333;
+    }
+    .node {
+        cursor: pointer;
+    }
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+    function graph() {
+        this.getNodes = function() {
+            return nodes;
+        }
+
+        this.addNode = function(id, type, ip) {
+            nodes.push({"id": id, "type": type, "ip" : ip});
+            update();
+        }
+
+        this.removeNode = function(id) {
+            var i = 0;
+            var n = findNode(id);
+            while(i < links.length){
+                if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+                else i++;
+            }
+            nodes.splice(findNodeIndex(id), 1);
+            update();
+        }
+
+        this.addLink = function(source, target, value) {
+            links.push({"source": findNode(source), "target": findNode(target), "value": value});
+            update();
+        }
+
+        var findNode = function(id) {
+            for(var i in nodes){ if(nodes[i]["id"] === id) return nodes[i]};
+        }
+
+        var findNodeIndex = function(id) {
+            for (var i in nodes) {if (nodes[i]["id"] === id) return i};
+        }
+
+        var w = window.innerWidth - 20;
+        var h = window.innerHeight - 20;
+        var svg = d3.select("body").append("svg")
+                .attr("width", w)
+                .attr("height", h);
+        var g = svg.append("g");
+
+        var force = d3.layout.force();
+        var nodes = force.nodes();
+        var links = force.links();
+
+        var update = function () {
+            var link = g.selectAll(".link")
+                    .data(links, function(d) { return d.source.id + "&" + d.target.id; });
+
+            link.enter().insert("line")
+                    .attr("id",function(d){return d.source.id + "&" + d.target.id;})
+                    .attr("stroke", "white")
+                    .attr("class","link");
+
+            link.exit().remove();
+
+            var node = svg.selectAll(".node")
+                    .data(nodes, function(d){ return d.id });
+
+            var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .call(force.drag);
+
+            nodeEnter.append("image")
+                    .attr("xlink:href",function(d) {
+                        switch(d.type){
+                            case 3: return "icon_client.png";
+                            case 2: return "icon_server.png";
+                            case 1: return "icon_router.png";
+                            case "switch": return "icon_switch.png";
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7: return "icon_abstract.png";
+                            case 8: return "icon_service.png";
+                            case 9: return "icon_zeroshell.png";
+                        }
+                    })
+                    .attr("width",40)
+                    .attr("height",40)
+                    .attr("x",-20)
+                    .attr("y",-20)
+                    .attr("id", function(d){ return "Node;" + d.id });
+
+            nodeEnter.append("text")
+                    .text(function(d) { return d.id })
+                    .attr("fill", "white")
+                    .attr("font-size", "8px")
+                    .attr("font-family", "Helvetica")
+                    .attr("dx", 12)
+                    .attr("dy", 0);
+
+            node.exit().remove();
+
+            force.on("tick", function() {
+                link    .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+
+                node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+            });
+
+            force
+                    .linkDistance(50)
+                    .charge(-1000)
+                    .size([w, h])
+                    .start();
+        }
+        update();
+    }
+
+    var network = new graph();
+    var nodes;
+    var links;
+
+    d3.json("traffic-network.json", function(json) {
+        nodes = json.machines;
+        links = json.links;
+        for(var i=0; i<nodes.length; i++){
+            var splitip = nodes[i].interfaces[nodes[i].interfaces.length-1].ip_addr.split(".").reverse();
+            network.addNode(nodes[i].vm_name, nodes[i].image_id, splitip);
+        }
+        var nest = d3.nest()
+                .key(function(d){return d.ip[1]})
+                .key(function(d){return d.ip[2]})
+                .entries(network.getNodes());
+        for(var i=0; i<nest.length; i++){
+            for(var j=0; j<nest[i].values.length; j++){
+                for(var k=1; k<nest[i].values[j].values.length; k++){
+                    network.addLink(nest[i].values[j].values[0].id,nest[i].values[j].values[k].id,'0');
+                }
+                network.addLink("main-gateway",nest[i].values[j].values[0].id,'0');
+            }
+        }
+    });
+
+</script>

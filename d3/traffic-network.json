@@ -1,0 +1,926 @@
+{
+  "roles": [],
+
+
+
+  "images": [
+    {
+      "image_file": "ROUTER.ova",
+      "image_id": 1
+    },
+    {
+      "image_file": "SERVER.ova",
+      "image_id": 2
+    },
+    {
+      "image_file": "TRAFFIC.ova",
+      "image_id": 3
+    },
+    {
+      "image_file": "FTP-V.ova",
+      "image_id": 4
+    },
+    {
+      "image_file": "FTP-NV.ova",
+      "image_id": 5
+    },
+    {
+      "image_file": "ACTIVE-V.ova",
+      "image_id": 6
+    },
+    {
+      "image_file": "ACTIVE-NV.ova",
+      "image_id": 7
+    },
+    {
+      "image_file": "SERVICES.ova",
+      "image_id": 8
+    },
+    {
+      "image_file": "ZEROSHELL.ova",
+      "image_id": 9
+    }
+  ],
+
+
+
+  "gateways": [
+    {
+      "netaddr": "10.0.0.0",
+      "gateway_id": 10,
+      "is_vm": 0,
+      "max_hosts": 16777214,
+      "used_hosts": 1,
+      "gateway": "10.0.0.1",
+      "netmask": 8,
+      "bdcastaddr": "10.0.255.255"
+    },
+    {
+      "netaddr": "10.1.0.0",
+      "gateway_id": 101,
+      "is_vm": 1,
+      "max_hosts": 65534,
+      "used_hosts": 1,
+      "gateway": "10.1.0.1",
+      "netmask": 16,
+      "bdcastaddr": "10.1.255.255"
+    },
+    {
+      "netaddr": "10.2.0.0",
+      "gateway_id": 102,
+      "is_vm": 1,
+      "max_hosts": 65534,
+      "used_hosts": 1,
+      "gateway": "10.2.0.1",
+      "netmask": 16,
+      "bdcastaddr": "10.2.255.255"
+    },
+
+
+    {
+      "netaddr": "172.16.1.0",
+      "gateway_id": 1721,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "172.16.1.1",
+      "netmask": 24,
+      "bdcastaddr": "172.16.1.255"
+    },
+    {
+      "netaddr": "172.16.2.0",
+      "gateway_id": 1722,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "172.16.2.1",
+      "netmask": 24,
+      "bdcastaddr": "172.16.2.255"
+    },
+    {
+      "netaddr": "172.16.3.0",
+      "gateway_id": 1723,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "172.16.3.1",
+      "netmask": 24,
+      "bdcastaddr": "172.16.3.255"
+    },
+    {
+      "netaddr": "172.16.4.0",
+      "gateway_id": 1724,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "172.16.4.1",
+      "netmask": 24,
+      "bdcastaddr": "172.16.4.255"
+    },
+    {
+      "netaddr": "172.16.5.0",
+      "gateway_id": 1725,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "172.16.5.1",
+      "netmask": 24,
+      "bdcastaddr": "172.16.5.255"
+    },
+
+
+    {
+      "netaddr": "192.168.1.0",
+      "gateway_id": 1921,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "192.168.1.1",
+      "netmask": 24,
+      "bdcastaddr": "192.168.1.255"
+    },
+    {
+      "netaddr": "192.168.2.0",
+      "gateway_id": 1922,
+      "is_vm": 1,
+      "max_hosts": 254,
+      "used_hosts": 1,
+      "gateway": "192.168.2.1",
+      "netmask": 24,
+      "bdcastaddr": "192.168.2.255"
+    }
+  ],
+
+
+
+  "machines": [
+    {
+      "rd_port": 0,
+      "vm_name": "main-gateway",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 10,
+          "ip_addr": "10.0.0.101",
+          "ni_name": "main-gateway-2",
+          "prefix": 8,
+          "hostname": "main-gateway-2"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "10.1.0.1",
+          "ni_name": "main-gateway-3",
+          "prefix": 16,
+          "hostname": "main-gateway-3"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "10.2.0.1",
+          "ni_name": "main-gateway-4",
+          "prefix": 16,
+          "hostname": "main-gateway-4"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "internet1",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 10,
+          "ip_addr": "10.3.4.5",
+          "ni_name": "internet1-1",
+          "prefix": 8,
+          "hostname": "internet1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "internet2",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 10,
+          "ip_addr": "10.5.6.7",
+          "ni_name": "internet2-1",
+          "prefix": 8,
+          "hostname": "internet2-1"
+        }
+      ]
+    },
+
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 102,
+          "ip_addr": "10.2.0.101",
+          "ni_name": "dmz-router-1",
+          "prefix": 16,
+          "hostname": "dmz-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "172.16.5.1",
+          "ni_name": "dmz-router-2",
+          "prefix": 24,
+          "hostname": "dmz-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.100",
+          "ni_name": "dmz-web-1",
+          "prefix": 24,
+          "hostname": "dmz-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-email",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.101",
+          "ni_name": "dmz-email-1",
+          "prefix": 24,
+          "hostname": "dmz-email-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-dns",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.102",
+          "ni_name": "dmz-dns-1",
+          "prefix": 24,
+          "hostname": "dmz-dns-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-ftp-v",
+      "image_id": 4,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.103",
+          "ni_name": "dmz-ftp-v-1",
+          "prefix": 24,
+          "hostname": "dmz-ftp-v-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-ftp-nv",
+      "image_id": 5,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.104",
+          "ni_name": "dmz-ftp-nv-1",
+          "prefix": 24,
+          "hostname": "dmz-ftp-nv-1"
+        }
+      ]
+    },
+	{
+      "rd_port": 0,
+      "vm_name": "dmz-active-v",
+      "image_id": 6,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.105",
+          "ni_name": "dmz-active-v-1",
+          "prefix": 24,
+          "hostname": "dmz-active-v-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-active-nv",
+      "image_id": 7,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.106",
+          "ni_name": "dmz-active-nv-1",
+          "prefix": 24,
+          "hostname": "dmz-active-nv-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-services",
+      "image_id": 8,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.107",
+          "ni_name": "dmz-services",
+          "prefix": 24,
+          "hostname": "dmz-services"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "dmz-zeroshell",
+      "image_id": 9,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1725,
+          "ip_addr": "172.16.5.108",
+          "ni_name": "dmz-zeroshell-1",
+          "prefix": 24,
+          "hostname": "dmz-zeroshell-1"
+        }
+      ]
+    },
+
+    {
+      "rd_port": 0,
+      "vm_name": "sensor",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 101,
+          "ip_addr": "10.1.0.100",
+          "ni_name": "sensor-1",
+          "prefix": 16,
+          "hostname": "sensor-1"
+        }
+      ]
+    },
+
+    {
+      "rd_port": 0,
+      "vm_name": "hr-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 101,
+          "ip_addr": "10.1.0.101",
+          "ni_name": "hr-router-1",
+          "prefix": 16,
+          "hostname": "hr-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "172.16.1.1",
+          "ni_name": "hr-router-2",
+          "prefix": 24,
+          "hostname": "hr-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hr-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1721,
+          "ip_addr": "172.16.1.100",
+          "ni_name": "hr-web-1",
+          "prefix": 24,
+          "hostname": "hr-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hr-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1721,
+          "ip_addr": "172.16.1.101",
+          "ni_name": "hr-pc1-1",
+          "prefix": 24,
+          "hostname": "hr-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hr-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1721,
+          "ip_addr": "172.16.1.102",
+          "ni_name": "hr-pc2-1",
+          "prefix": 24,
+          "hostname": "hr-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hr-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1721,
+          "ip_addr": "172.16.1.103",
+          "ni_name": "hr-pc3-1",
+          "prefix": 24,
+          "hostname": "hr-pc3-1"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "hiring-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1721,
+          "ip_addr": "172.16.1.104",
+          "ni_name": "hiring-router-1",
+          "prefix": 24,
+          "hostname": "hiring-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "192.168.1.1",
+          "ni_name": "hiring-router-2",
+          "prefix": 24,
+          "hostname": "hiring-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hiring-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1921,
+          "ip_addr": "192.168.1.100",
+          "ni_name": "hiring-web-1",
+          "prefix": 24,
+          "hostname": "hiring-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hiring-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1921,
+          "ip_addr": "192.168.1.101",
+          "ni_name": "hiring-pc1-1",
+          "prefix": 24,
+          "hostname": "hiring-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hiring-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1921,
+          "ip_addr": "192.168.1.102",
+          "ni_name": "hiring-pc2-1",
+          "prefix": 24,
+          "hostname": "hiring-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "hiring-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1921,
+          "ip_addr": "192.168.1.103",
+          "ni_name": "hiring-pc3-1",
+          "prefix": 24,
+          "hostname": "hiring-pc3-1"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "itsec-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 101,
+          "ip_addr": "10.1.0.102",
+          "ni_name": "itsec-router-1",
+          "prefix": 16,
+          "hostname": "itsec-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "172.16.2.1",
+          "ni_name": "itsec-router-2",
+          "prefix": 24,
+          "hostname": "itsec-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "itsec-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1722,
+          "ip_addr": "172.16.2.100",
+          "ni_name": "itsec-web-1",
+          "prefix": 24,
+          "hostname": "itsec-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "itsec-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1722,
+          "ip_addr": "172.16.2.101",
+          "ni_name": "itsec-pc1-1",
+          "prefix": 24,
+          "hostname": "itsec-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "itsec-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1722,
+          "ip_addr": "172.16.2.102",
+          "ni_name": "itsec-pc2-1",
+          "prefix": 24,
+          "hostname": "itsec-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "itsec-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1722,
+          "ip_addr": "172.16.2.103",
+          "ni_name": "itsec-pc3-1",
+          "prefix": 24,
+          "hostname": "itsec-pc3-1"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "research-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 101,
+          "ip_addr": "10.1.0.103",
+          "ni_name": "research-router-1",
+          "prefix": 16,
+          "hostname": "research-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "172.16.3.1",
+          "ni_name": "research-router-2",
+          "prefix": 24,
+          "hostname": "research-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "research-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.100",
+          "ni_name": "research-web-1",
+          "prefix": 24,
+          "hostname": "research-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "research-mysql",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.101",
+          "ni_name": "research-mysql-1",
+          "prefix": 24,
+          "hostname": "research-mysql-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "research-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.102",
+          "ni_name": "research-pc1-1",
+          "prefix": 24,
+          "hostname": "research-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "research-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.103",
+          "ni_name": "research-pc2-1",
+          "prefix": 24,
+          "hostname": "research-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "research-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.104",
+          "ni_name": "research-pc3-1",
+          "prefix": 24,
+          "hostname": "research-pc3-1"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "profs-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1723,
+          "ip_addr": "172.16.3.105",
+          "ni_name": "profs-router-1",
+          "prefix": 24,
+          "hostname": "profs-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "192.168.2.1",
+          "ni_name": "profs-router-2",
+          "prefix": 24,
+          "hostname": "profs-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "profs-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1922,
+          "ip_addr": "192.168.2.100",
+          "ni_name": "profs-web-1",
+          "prefix": 24,
+          "hostname": "profs-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "profs-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1922,
+          "ip_addr": "192.168.2.101",
+          "ni_name": "profs-pc1-1",
+          "prefix": 24,
+          "hostname": "profs-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "profs-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1922,
+          "ip_addr": "192.168.2.102",
+          "ni_name": "profs-pc2-1",
+          "prefix": 24,
+          "hostname": "profs-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "profs-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1922,
+          "ip_addr": "192.168.2.103",
+          "ni_name": "profs-pc3-1",
+          "prefix": 24,
+          "hostname": "profs-pc3-1"
+        }
+      ]
+    },
+
+
+    {
+      "rd_port": 0,
+      "vm_name": "admin-router",
+      "image_id": 1,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 101,
+          "ip_addr": "10.1.0.104",
+          "ni_name": "admin-router-1",
+          "prefix": 16,
+          "hostname": "admin-router-1"
+        },
+        {
+          "gateway_id": 1,
+          "ip_addr": "172.16.4.1",
+          "ni_name": "admin-router-2",
+          "prefix": 24,
+          "hostname": "admin-router-2"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "admin-web",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1724,
+          "ip_addr": "172.16.4.100",
+          "ni_name": "admin-web-1",
+          "prefix": 24,
+          "hostname": "admin-web-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "admin-mysql",
+      "image_id": 2,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1724,
+          "ip_addr": "172.16.4.101",
+          "ni_name": "admin-mysql-1",
+          "prefix": 24,
+          "hostname": "admin-mysql-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "admin-pc1",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1724,
+          "ip_addr": "172.16.4.102",
+          "ni_name": "admin-pc1-1",
+          "prefix": 24,
+          "hostname": "admin-pc1-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "admin-pc2",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1724,
+          "ip_addr": "172.16.4.103",
+          "ni_name": "admin-pc2-1",
+          "prefix": 24,
+          "hostname": "admin-pc2-1"
+        }
+      ]
+    },
+    {
+      "rd_port": 0,
+      "vm_name": "admin-pc3",
+      "image_id": 3,
+      "roles": [],
+      "interfaces": [
+        {
+          "gateway_id": 1724,
+          "ip_addr": "172.16.4.104",
+          "ni_name": "admin-pc3-1",
+          "prefix": 24,
+          "hostname": "admin-pc3-1"
+        }
+      ]
+    }
+  ]
+}
