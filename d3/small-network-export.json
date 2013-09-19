@@ -1,0 +1,201 @@
+{
+    "os": [
+        {
+            "os_name": "Linux: Other",
+            "os_id": 4
+        }
+    ],
+    "roles": [
+        {
+            "role_id": 1,
+            "role_name": "webserver",
+            "actions": [
+                {
+                    "action_user": "root",
+                    "os_id": 2,
+                    "action_name": "Start Apache",
+                    "action_command": "/etc/init.d/apache2 start"
+                },
+                {
+                    "action_user": "Administrator",
+                    "os_id": 1,
+                    "action_name": "Start IIS",
+                    "action_command": "mmc %systemroot%\\system32\\inetsrv\\iis.msc"
+                }
+            ]
+        }
+    ],
+    "images": [
+        {
+            "image_file": "TinyCore.ova",
+            "image_id": 6
+        },
+        {
+            "image_file": "Router.ova",
+            "image_id": 9
+        },
+        {
+            "image_file": "Server.ova",
+            "image_id": 10
+        },
+        {
+            "image_file": "PC.ova",
+            "image_id": 11
+        }
+    ],
+    "gateways": [
+        {
+            "netaddr": "13.0.0.0",
+            "gateway_id": 116,
+            "is_vm": 1,
+            "max_hosts": "65534",
+            "gateway": "13.0.0.1",
+            "bdcastaddr": "13.0.255.255",
+            "used_hosts": "6",
+            "netmask": "16"
+        },
+        {
+            "netaddr": "192.169.1.0",
+            "gateway_id": 117,
+            "is_vm": 1,
+            "max_hosts": "254",
+            "gateway": "192.169.1.1",
+            "bdcastaddr": "192.169.1.255",
+            "used_hosts": "5",
+            "netmask": "24"
+        },
+        {
+            "netaddr": "192.169.2.0",
+            "gateway_id": 118,
+            "is_vm": 1,
+            "max_hosts": "254",
+            "gateway": "192.169.2.1",
+            "bdcastaddr": "192.169.2.255",
+            "used_hosts": "4",
+            "netmask": "24"
+        }
+    ],
+    "machines": [
+        {
+            "rd_port": 4003,
+            "vm_name": "Server A1",
+            "roles": [
+                1
+            ],
+            "interfaces": [
+                {
+                    "gateway_id": 117,
+                    "ip_addr": "192.169.1.101",
+                    "ni_name": "pc-a1",
+                    "prefix": 24,
+                    "hostname": "pc-a1"
+                }
+            ],
+            "image_id": 10
+        },
+        {
+            "rd_port": 4004,
+            "vm_name": "Server B1",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 118,
+                    "ip_addr": "192.169.2.101",
+                    "ni_name": "pc-b1",
+                    "prefix": 24,
+                    "hostname": "pc-b1"
+                }
+            ],
+            "image_id": 10
+        },
+        {
+            "rd_port": 4001,
+            "vm_name": "Router A",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 116,
+                    "ip_addr": "13.0.0.101",
+                    "ni_name": "router-a-1",
+                    "prefix": 16,
+                    "hostname": "router-a-1"
+                },
+                {
+                    "gateway_id": 1,
+                    "ip_addr": "192.169.1.1",
+                    "ni_name": "router-a-2",
+                    "prefix": 24,
+                    "hostname": "router-a-2"
+                }
+            ],
+            "image_id": 9
+        },
+        {
+            "rd_port": 4002,
+            "vm_name": "Router B",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 116,
+                    "ip_addr": "13.0.0.102",
+                    "ni_name": "router-b-1",
+                    "prefix": 16,
+                    "hostname": "router-b-1"
+                },
+                {
+                    "gateway_id": 1,
+                    "ip_addr": "192.169.2.1",
+                    "ni_name": "router-b-2",
+                    "prefix": 24,
+                    "hostname": "router-b-2"
+                }
+            ],
+            "image_id": 9
+        },
+        {
+            "rd_port": 0,
+            "vm_name": "PC B2",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 118,
+                    "ip_addr": "192.169.2.102",
+                    "ni_name": "pc-b2",
+                    "prefix": 24,
+                    "hostname": "pc-b2"
+                }
+            ],
+            "image_id": 11
+        },
+        {
+            "rd_port": 9000,
+            "vm_name": "PC A2",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 117,
+                    "ip_addr": "192.169.1.102",
+                    "ni_name": "pc-a2",
+                    "prefix": 24,
+                    "hostname": "pc-a2"
+                }
+            ],
+            "image_id": 11
+        },
+        {
+            "rd_port": 9501,
+            "vm_name": "main-gateway",
+            "roles": [],
+            "interfaces": [
+                {
+                    "gateway_id": 116,
+                    "ip_addr": "13.0.0.1",
+                    "ni_name": "main-gateway-1",
+                    "prefix": 16,
+                    "hostname": "main-gateway-1"
+                }
+            ],
+            "image_id": 6
+        }
+    ]
+}

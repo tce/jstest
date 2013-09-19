@@ -9,10 +9,26 @@
     }
 </style>
 <body>
+<div id="chart"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+    var w = window.innerWidth - 20;
+    var h = window.innerHeight - 20;
+
+    var outer = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h)
+            .attr("pointer-events", "all");
+    var svg = outer.append("svg");
+    var g = svg.append("g");
+
     function graph() {
+        var force = d3.layout.force();
+        var nodes = force.nodes();
+        var links = force.links();
+
         this.getNodes = function() {
             return nodes;
         }
@@ -46,16 +62,7 @@
             for (var i in nodes) {if (nodes[i]["id"] === id) return i};
         }
 
-        var w = window.innerWidth - 20;
-        var h = window.innerHeight - 20;
-        var svg = d3.select("body").append("svg")
-                .attr("width", w)
-                .attr("height", h);
-        var g = svg.append("g");
 
-        var force = d3.layout.force();
-        var nodes = force.nodes();
-        var links = force.links();
 
         var update = function () {
             var link = g.selectAll(".link")
@@ -97,9 +104,9 @@
                     .attr("id", function(d){ return "Node;" + d.id });
 
             nodeEnter.append("text")
-                    .text(function(d) { return d.id })
+                    .text(function(d) { return d.ip })
                     .attr("fill", "white")
-                    .attr("font-size", "8px")
+                    .attr("font-size", "12px")
                     .attr("font-family", "Helvetica")
                     .attr("dx", 12)
                     .attr("dy", 0);
@@ -128,7 +135,7 @@
     var nodes;
     var links;
 
-    d3.json("traffic-network.json", function(json) {
+    d3.json("small-network-export.json", function(json) {
         nodes = json.machines;
         links = json.links;
         for(var i=0; i<nodes.length; i++){
@@ -136,11 +143,15 @@
             network.addNode(nodes[i].vm_name, nodes[i].image_id, splitip);
         }
         var nest = d3.nest()
-                .key(function(d){return d.ip[1]})
-                .key(function(d){return d.ip[2]})
+                .key(function(d){return d.ip[1]}).sortKeys(d3.ascending)
+                .key(function(d){return d.ip[2]}).sortKeys(d3.ascending)
                 .entries(network.getNodes());
+        console.log(nest);
         for(var i=0; i<nest.length; i++){
+            //combine same j values
             for(var j=0; j<nest[i].values.length; j++){
+                nest[i].values[j].values.sort(d3.ascending);
+                console.log(nest[i].values[j].values);
                 for(var k=1; k<nest[i].values[j].values.length; k++){
                     network.addLink(nest[i].values[j].values[0].id,nest[i].values[j].values[k].id,'0');
                 }
