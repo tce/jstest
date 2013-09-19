@@ -53,18 +53,18 @@
                 .attr("width", w)
                 .attr("height", h);
         var g = svg.append("g");
+        var g2 = svg.append("g");
+        var dragging = false;
 
-        svg.call(d3.behavior.zoom().on("zoom", redraw))
+        svg.call(d3.behavior.zoom().scaleExtent([0.8,2]).on("zoom",redraw));
 
         var translate = 1;
         var scale = 1;
         function redraw() {
-            //console.log("in redraw");
             translate = d3.event.translate;
             scale = d3.event.scale;
-            //console.log(scale);
-            svg.attr("transform",
-                    " scale(" + d3.event.scale + ")");
+            g.attr("transform","translate(" + translate + ") scale(" + scale + ")");
+            g2.attr("transform","translate(" + translate + ") scale(" + scale + ")");
         }
 
         var force = d3.layout.force();
@@ -78,17 +78,20 @@
             link.enter().insert("line")
                     .attr("id",function(d){return d.source.id + "&" + d.target.id;})
                     .attr("stroke", "#303030")
-                    .attr("class","link")
-                    .attr("scale", scale);
+                    .attr("class","link");
 
             link.exit().remove();
 
-            var node = svg.selectAll(".node")
-                    .data(nodes, function(d){ return d.id });
+            var drag = force.drag()
+                    .on("dragstart",function(){ dragging = true })
+                    .on("dragend",function(){ dragging = false });
+
+            var node = g2.selectAll(".node")
+                    .data(nodes, function(d){ return d.id })
+                    /*.call(drag)*/;
 
             var nodeEnter = node.enter().append("g")
-                    .attr("class", "node")
-                    .call(force.drag);
+                    .attr("class", "node");
 
             nodeEnter.append("image")
                     .attr("xlink:href",function(d) {
@@ -112,14 +115,12 @@
                     .attr("height",40)
                     .attr("x",-20)
                     .attr("y",-20)
-                    .attr("translate", translate)
-                    .attr("scale", scale)
                     .attr("id", function(d){ return "Node;" + d.id });
 
             nodeEnter.append("text")
                     .text(function(d) { return d.id})
                     .attr("fill", "#303030")
-                    .attr("font-size", "10px")
+                    .attr("font-size", "12px")
                     .attr("font-family", "Helvetica")
                     .attr("dx", 12)
                     .attr("dy", 0);
@@ -137,7 +138,7 @@
 
             force
                     .linkDistance(50)
-                    .charge(-400)
+                    .charge(-1000)
                     .size([w, h])
                     .start();
         }
