@@ -18,13 +18,13 @@
 <body>
 <div class="btn-toolbar" style="margin: 5px">
     <div class="btn-group">
-        <button class="btn" type="button" id="p_top"><i class="icon-th-list"></i></button>
-        <button class="btn" type="button" id="p_ind"><i class="icon-th"></i></button>
-        <button class="btn" type="button" id="p_ran"><i class="icon-align-left"></i></button>
+        <button class="pbtn btn" type="button" id="p_non"><i class="icon-ban-circle"></i></button>
+        <button class="pbtn btn" type="button" id="p_top"><i class="icon-th-list"></i></button>
+        <button class="pbtn btn" type="button" id="p_ind"><i class="icon-th"></i></button>
     </div>
     <div class="btn-group">
-        <button class="btn" type="button" id="i_non"><i class="icon-ban-circle"></i></button>
-        <button class="btn" type="button" id="i_mes"><i class="icon-envelope"></i></button>
+        <button class="ibtn btn" type="button" id="i_non"><i class="icon-ban-circle"></i></button>
+        <button class="ibtn btn" type="button" id="i_mes"><i class="icon-envelope"></i></button>
     </div>
 </div>
 <div id="content"></div>
@@ -34,32 +34,48 @@
 
 <script>
 
-    var peripheral = "top";
-    var inward = "non";
+    var peripheral;
+    var inward;
+    setPeripheral("non");
+    setInward("non");
 
+    d3.selectAll(".pbtn")
+
+    d3.select("#p_non")
+            .on("click",function(){
+                setPeripheral("non");
+            });
     d3.select("#p_top")
             .on("click",function(){
-                peripheral = "top";
+                setPeripheral("top");
             });
     d3.select("#p_ind")
             .on("click",function(){
-                peripheral = "ind";
-            });
-    d3.select("#p_ran")
-            .on("click",function(){
-                peripheral = "ran";
+                setPeripheral("ind");
             });
     d3.select("#i_non")
             .on("click",function(){
-                inward = "non";
+                setInward("non");
             });
-    d3.select("#p_mes")
+    d3.select("#i_mes")
             .on("click",function(){
-                inward = "mes";
+                setInward("mes");
             });
 
-    var w = window.innerWidth - 20;
-    var h = window.innerHeight - 20;
+    function setPeripheral(setting){
+        peripheral = setting;
+        d3.selectAll(".pbtn").attr("class","pbtn btn");
+        d3.select("#p_" + setting).attr("class","pbtn btn active");
+    }
+
+    function setInward(setting){
+        inward = setting;
+        d3.selectAll(".ibtn").attr("class","ibtn btn");
+        d3.select("#i_" + setting).attr("class","ibtn btn active");
+    }
+
+    var w = window.innerWidth - 50;
+    var h = window.innerHeight - 50;
     var radius = h*0.6;
     var color = d3.scale.category20();
     var rings = d3.scale.category20c();
@@ -74,13 +90,16 @@
 
     var arc = d3.svg.arc();
 
-
-
     setInterval(function(){
+        if(peripheral != "top"){
+            d3.selectAll(".segment").remove();
+            return;
+        }
         var cur;
         var n = 0;
         var region;
         var layers = 0;
+        d3.selectAll(".segment").filter(function(d,i){ return i < (d3.selectAll(".segment").size() - ((segments.length + 1) * 2)) }).remove();
         for(var i=0; i<environments.length; i++){
             if(environments[i].ippath.length > layers){
                 layers = environments[i].ippath.length;
@@ -88,11 +107,12 @@
         }
         for(layer=0; layer<layers; layer++){
             cur = environments[n].ippath[layer];
-            region = (radius * 0.65) + 17 * (5 - (layer + 1));
+            region = (radius * 0.6) + (radius / 28) * (5 - (layer + 1));
             segments[n] = g.append("path")
                     .datum({innerRadius: region, outerRadius: region*1.04, startAngle: Math.PI/2, endAngle: Math.PI/2})
                     .style("fill",rings(n))
-                    .attr("d",arc);
+                    .attr("d",arc)
+                    .attr("class","segment");
             var start = Math.PI/2;
             var end = Math.PI/2;
             for(var j=0; j<environments.length; j++){
@@ -105,7 +125,8 @@
                     segments[n] = g.append("path")
                             .datum({innerRadius: region, outerRadius: region*1.04, startAngle: start, endAngle: end})
                             .style("fill",rings(n))
-                            .attr("d",arc);
+                            .attr("d",arc)
+                            .attr("class","segment");
                 }
             }
             end = sectors[j] + Math.PI/2;
@@ -150,7 +171,7 @@
             if(typeof env != "number"){
                 env = findEnvironmentIndex(env) + 1;
             };
-            nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1});
+            nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1, "received": 0});
             environments[env].agents.push(findAgent(id));
             update();
         }
@@ -167,14 +188,13 @@
             for(var i = n.ind-1; i < environments[n.env].agents.length; i++){
                 environments[n.env].agents[i].ind--;
             }
-            console.log(environments[n.env].agents);
             update();
         }
 
         this.sendMessage = function(source, target, value) {
             var source = findAgent(source);
             links.push({"source": source, "target": findAgent(target), "value": value});
-            //source.received++;
+            source.received++;
             update();
         }
 
@@ -255,10 +275,24 @@
                 var monVal = 0;
 
                 var k = e.alpha * 0.1;
-                nodes.forEach(function(o,i) {
-                    o.x += (w / 2 + Math.cos(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.x) * k;
-                    o.y += (h / 2 + Math.sin(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.y) * k;
-                });
+                switch(peripheral){
+                    case "non":
+                            force.charge(-50);
+                        break;
+                    case "top":
+                            force.charge(-2);
+                        nodes.forEach(function(o) {
+                            o.x += (w / 2 + Math.cos(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.x) * k;
+                            o.y += (h / 2 + Math.sin(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.y) * k;
+                        }); break;
+                    case "ind":
+                            force.charge(-2);
+                        nodes.forEach(function(o,i) {
+                            o.x += (w / 2 + Math.cos(i) * (radius - monVal) - o.x) * k;
+                            o.y += (h / 2 + Math.sin(i) * (radius - monVal) - o.y) * k;
+                        }); break;
+                }
+
 
                 node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
@@ -277,9 +311,9 @@
             force
                     .linkStrength(0)
                     .linkDistance(50)
-                    .charge(-2)
                     .size([w,h])
                     .start();
+
         }
         update();
     }
