@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body{
+        background: #FFFFFF;
+    }
+    .node {
+        cursor: pointer;
+    }
+</style>
+<body>
+<div id="graphContainer"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+    function Graph() {
+        this.getNodes = function() {
+            return nodes;
+        }
+
+        this.addNode = function(id, type, ip) {
+            nodes.push({"id": id, "type": type, "ip" : ip});
+            update();
+        }
+
+        this.removeNode = function(id) {
+            var i = 0;
+            var n = findNode(id);
+            while(i < links.length){
+                if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+                else i++;
+            }
+            nodes.splice(findNodeIndex(id), 1);
+            update();
+        }
+
+        this.addLink = function(source, target, value) {
+            links.push({"source": findNode(source), "target": findNode(target), "value": value});
+            update();
+        }
+
+        var findNode = function(id) {
+            for(var i in nodes){ if(nodes[i]["id"] === id) return nodes[i]};
+        }
+
+        var findNodeIndex = function(id) {
+            for (var i in nodes) {if (nodes[i]["id"] === id) return i};
+        }
+
+        var w = window.innerWidth - 20;
+        var h = window.innerHeight - 20;
+        var svg = d3.select("#graphContainer").append("svg")
+                .attr("width", w)
+                .attr("height", h);
+        var g = svg.append("g");
+        var g2 = svg.append("g");
+        var dragging = false;
+
+        svg.call(d3.behavior.zoom().scaleExtent([0.8,2]).on("zoom",redraw));
+
+        var translate = 1;
+        var scale = 1;
+        function redraw() {
+            translate = d3.event.translate;
+            scale = d3.event.scale;
+            g.attr("transform","translate(" + translate + ") scale(" + scale + ")");
+            g2.attr("transform","translate(" + translate + ") scale(" + scale + ")");
+        }
+
+        var force = d3.layout.force();
+        var nodes = force.nodes();
+        var links = force.links();
+
+        var update = function () {
+            var link = g.selectAll(".link")
+                    .data(links, function(d) { return d.source.id + "&" + d.target.id; });
+
+            link.enter().insert("line")
+                    .attr("id",function(d){return d.source.id + "&" + d.target.id;})
+                    .attr("stroke", "#303030")
+                    .attr("class","link");
+
+            link.exit().remove();
+
+            var drag = force.drag()
+                    .on("dragstart",function(){ dragging = true })
+                    .on("dragend",function(){ dragging = false });
+
+            var node = g2.selectAll(".node")
+                    .data(nodes, function(d){ return d.id })
+                    /*.call(drag)*/;
+
+            var nodeEnter = node.enter().append("g")
+                    .attr("class", "node");
+
+            nodeEnter.append("image")
+                    .attr("xlink:href",function(d) {
+                        var type = d.type.toLowerCase();
+                        if (type.indexOf("traffic") > -1 || type.indexOf("client") > -1 || type.indexOf("pc") > -1)
+                            return "icon_client.png";
+                        else if (type.indexOf("server") > -1)
+                            return "icon_server.png";
+                        else if (type.indexOf("router") > -1)
+                            return "icon_router.png";
+                        else if (type.indexOf("service") > -1)
+                            return "icon_client.png";
+                        else if (type.indexOf("traffic") > -1)
+                            return "icon_service.png";
+                        else if (type.indexOf("zeroshell") > -1)
+                            return "icon_zeroshell.png";
+                        else
+                            return "icon_abstract.png";
+                    })
+                    .attr("width",40)
+                    .attr("height",40)
+                    .attr("x",-20)
+                    .attr("y",-20)
+                    .attr("id", function(d){ return "Node;" + d.id });
+
+            nodeEnter.append("text")
+                    .text(function(d) { return d.id})
+                    .attr("fill", "#303030")
+                    .attr("font-size", "12px")
+                    .attr("font-family", "Helvetica")
+                    .attr("dx", 12)
+                    .attr("dy", 0);
+
+            node.exit().remove();
+
+            force.on("tick", function() {
+                link    .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+
+                node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+            });
+
+            force
+                    .linkDistance(50)
+                    .charge(-1000)
+                    .size([w, h])
+                    .start();
+        }
+        update();
+    }
+
+
+
+    function drawGraph(jsonUrl) {
+        var network = new Graph();
+        var nodes;
+        var links;
+        var images = {};
+        d3.json(jsonUrl, function(json) {
+            nodes = json.machines;
+            links = json.links;
+
+            for (var i = 0; i < json.images.length; i++) {
+                images[json.images[i].image_id] = json.images[i].image_file;
+            }
+
+            for(var i=0; i<nodes.length; i++){
+                for(var j=0; j<nodes[i].interfaces.length; j++){
+                    var splitip = nodes[i].interfaces[j].ip_addr.split(".");
+                    network.addNode(nodes[i].vm_name, images[nodes[i].image_id], splitip);
+                }
+            }
+            var nest = d3.nest()
+                    .key(function(d){return d.ip[0]}).sortKeys(d3.ascending)
+                    .key(function(d){return d.ip[1]}).sortKeys(d3.ascending)
+                    .key(function(d){return d.ip[2]}).sortKeys(d3.ascending)
+                    .key(function(d){return d.ip[3]}).sortKeys(d3.ascending)
+                    .entries(network.getNodes());
+            for(var i=0; i<nest.length; i++){
+                for(var j=0; j<nest[i].values.length; j++){
+                    for(var k=0; k<nest[i].values[j].values.length; k++){
+                        for(var l=0; l<nest[i].values[j].values[k].values.length; l++){
+                            network.addLink(
+                                    nest[i].values[j].values[k].values[0].values[0].id,
+                                    nest[i].values[j].values[k].values[l].values[0].id, '0');
+                        }
+                        if(i <= 1){
+                            network.addLink("main-gateway", nest[i].values[j].values[k].values[0].values[0].id, '0');
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    //drawGraph("small-network-export.json");
+    drawGraph("traffic-network.json");
+
+</script>
