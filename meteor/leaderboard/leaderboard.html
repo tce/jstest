@@ -4,9 +4,7 @@
 
 <body>
   {{> headerBarTemplate }}
-  {{> constellation }}
   {{> mainbody}}
-  {{> cubegraphs}}
   {{> footerBarTemplate }}
 </body>
 
@@ -53,14 +51,16 @@
   <div class="env {{selected}}">
     <span class="mira_label">{{mira_label}}</span>
     <span class="numAgents">{{numAgents}}</span>
+      <input type="button" class="addagent" value="Add agent"/>
   </div>
 </template>
 
 <template name="agt">
-    <div class="agt">
+    <div class="agt {{selected}}">
         <span class="agent_name">{{agent_name}}</span>
         <span class="host_env_name">{{host_env_name}}</span>
         <span class="create_env_name">{{create_env_name}}</span>
+        <input type="button" class="moveagent" value="Move agent"/>
     </div>
 </template>
 
@@ -81,4 +81,34 @@
             <li><a href="#" onclick='Session.set("selected_graph","collapsibleTreeChart");'><span class="pictographs">4  </span>Collapsible Tree Chart</a></li>
         </ul>
     </div>
+</template>
+
+<template name="createDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add an agent</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Name</label>
+      <input type="text" class="agtname span5">
+
+      <label>Class</label>
+      <textarea class="agtclass span5"></textarea>
+
+      <label>Parameters</label>
+      <textarea class="agtparameters span5"></textarea>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add party</a>
+    </div>
+  </div>
 </template>

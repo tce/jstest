@@ -3,8 +3,29 @@
 
 Envs = new Meteor.Collection("registry");
 Agts = new Meteor.Collection("agentproperties");
-
+CreatedAgts = new Meteor.Collection("createdagents");
 if (Meteor.isClient) {
+
+  Meteor.methods({
+  // options should include: name, class, parameters
+  createAgent: function (options) {
+    check(options, {
+      name: NonEmptyString,
+      class: NonEmptyString,
+      parameters: NonEmptyString
+    });
+
+    return CreatedAgents.insert({
+      env: Session.get("selected_env"),
+      name: options.name,
+      class: options.class,
+      parameters: options.parameters
+    });
+  }
+  });
+
+
+
     Template.leaderboard.env = function () {
         return Envs.find({}, {sort: {mira_label: 1}});
     };
@@ -18,17 +39,105 @@ if (Meteor.isClient) {
         return Session.equals("selected_env", this._id) ? "selected" : '';
     };
 
-    Template.leaderboard.events({
-        'click input.inc': function () {
+    Template.leaderboard.events(
+      {
+        'click input.inc': function ()
+        {
             Envs.update(Session.get("selected_env"), {$inc: {numAgents: 5}});
         }
-    });
+      },
+      {
+        'click input.addagent': function()
+        {
+          Envs.update(Session.get("selected_env"), {$inc: {numAgents: 1}} );
+        }
+      });
 
-    Template.env.events({
-        'click': function () {
+    Template.env.events(
+      {
+        'click': function ()
+        {
             Session.set("selected_env", this._id);
         }
+      },
+      {
+        'click input.addagent': function()
+        {
+          Envs.update(Session.get("selected_env"), {$inc: {numAgents: 1}} );
+        }
+      });
+
+    Template.agt.events({
+      'click':function(){
+        Session.set("selected_agt", this._id);
+        console.log("selected agent");
+        console.log(this._id);
+      }
     });
+
+
+      Template.agt.selected = function () {
+        return Session.equals("selected_agt", this._id) ? "selected" : '';
+    };
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Create Party dialog
+
+var openCreateDialog = function () {
+  Session.set("showCreateDialog", true);
+};
+
+Template.leaderboard.showCreateDialog = function () {
+  return Session.get("showCreateDialog");
+};
+
+Template.createDialog.events({
+  'click .save': function (event, template) {
+    var agtname = template.find(".agtname").value;
+    var agtclass = template.find(".agtclass").value;
+    var agtparameters = template.find(".agtparameters").value;
+
+    if (agtname.length && agtclass.length) {
+      Meteor.call('createAgent', {
+        agtname: agtname,
+        agtclass: agtclass,
+        agtparameters: agtparameters
+      }, function (error, party) {
+        if (! error) {
+            console.log("create the agent!!")
+        }
+      });
+      Session.set("showCreateDialog", false);
+    } else {
+      Session.set("createError",
+                  "It needs a title and a description, or why bother?");
+    }
+  },
+
+  'click .cancel': function () {
+    Session.set("showCreateDialog", false);
+  }
+});
+
+Template.createDialog.error = function () {
+  return Session.get("createError");
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // the leaderboard agt's will be those items in the Agts collection that have
     // "containedin": the selected environment

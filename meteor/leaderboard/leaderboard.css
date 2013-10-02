@@ -55,14 +55,14 @@ body {
 .agt .host_env_name {
     display: inline-block;
     width: 100px;
-    font-size: 0.6em;
+    font-size: 0.4em;
 }
 
 .agt .create_env_name {
     display: inline-block;
     width: 100px;
     text-align: right;
-    font-size: 0.6em;
+    font-size: 0.4em;
     font-weight: bold;
     color: #777;
 }
@@ -75,6 +75,10 @@ body {
 
 .env.selected .score {
     color: black;
+}
+
+.agt.selected {
+    background-color: green;
 }
 
 .details, .none {
@@ -92,6 +96,14 @@ body {
 }
 
 .inc {
+  cursor: pointer;
+}
+
+.moveagent {
+  cursor: pointer;
+}
+
+.addagent {
   cursor: pointer;
 }
 
