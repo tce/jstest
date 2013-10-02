@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media = "screen">
+</head>
+<meta charset="utf-8">
+<style>
+    body {
+        background-color: #000000;
+        font-family: "Lato" , Helvetica, sans-serif;
+        font-size: 12px;
+    }
+    .node {
+        cursor: pointer;
+        hand: pointer;
+    }
+</style>
+<body>
+<div class="btn-toolbar" style="margin: 5px">
+    <div class="btn-group">
+        <button class="pbtn btn" type="button" id="p_non"><i class="icon-ban-circle"></i></button>
+        <button class="pbtn btn" type="button" id="p_top"><i class="icon-th-list"></i></button>
+        <button class="pbtn btn" type="button" id="p_ind"><i class="icon-th"></i></button>
+    </div>
+    <div class="btn-group">
+        <button class="ibtn btn" type="button" id="i_non"><i class="icon-ban-circle"></i></button>
+        <button class="ibtn btn" type="button" id="i_mes"><i class="icon-envelope"></i></button>
+    </div>
+</div>
+<div id="content"></div>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var w = window.innerWidth - 50;
+var h = window.innerHeight - 50;
+var radius = h*0.6;
+var color = d3.scale.category20();
+var rings = d3.scale.category20c();
+var svg = d3.select("#content").append("svg")
+        .attr("width", w)
+        .attr("height", h);
+var g = svg.append("g")
+        .attr("transform","translate(" + w/2 + "," + h/2 + ")");
+var environments = [];
+var sectors = [0];
+var segments = [];
+var arc = d3.svg.arc();
+
+var force = d3.layout.force();
+var nodes = force.nodes();
+var links = force.links();
+
+//-------------------------------------------------------------------------
+//MIRA FUNCTIONALITY
+//-------------------------------------------------------------------------
+
+function addEnvironment(name, ip) {
+    var ippath = ip.split(".");
+    ippath.splice(ippath.length-1,1);
+    for(var i=0; i<environments.length; i++){
+        for(var j=0; j<ippath.length; j++){
+            if(ippath[j] > environments[i].ippath[j]){
+                break;
+            }else
+            if(ippath[j] < environments[i].ippath[j]){
+                environments.splice(i,0,{"id": name, "ippath": ippath, "agents": []});
+                return;
+            }
+        }
+    }
+    environments.push({"id": name, "ippath": ippath, "agents": []});
+}
+
+function addAgent(id, env) {
+    if(typeof env != "number"){
+        env = findEnvironmentIndex(env) + 1;
+    };
+    nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1, "received": Math.random()*400});
+    environments[env].agents.push(findAgent(id));
+    update();
+}
+
+function removeAgent(id) {
+    var i = 0;
+    var n = findAgent(id);
+    while(i < links.length){
+        if ((links[i]['source'] == n) || (links[i]['target'] == n)) links.splice(i, 1);
+        else i++;
+    }
+    nodes.splice(findAgentIndex(id), 1);
+    environments[n.env].agents.splice(n.ind-1, 1);
+    for(var i = n.ind-1; i < environments[n.env].agents.length; i++){
+        environments[n.env].agents[i].ind--;
+    }
+    update();
+}
+
+function sendMessage(source, target, value) {
+    var source = findAgent(source);
+    links.push({"source": source, "target": findAgent(target), "value": value});
+    //source.received += 50;
+    update();
+}
+
+function findEnvironmentIndex(id) {
+    for (var i in environments) {if (environments[i]["id"] === id) return i-1};
+}
+
+function findAgent(id) {
+    for(var i in nodes){ if(nodes[i]["id"] === id) return nodes[i]};
+}
+
+function findAgentIndex(id) {
+    for (var i in nodes) {if (nodes[i]["id"] === id) return i};
+}
+
+//-------------------------------------------------------------------------
+//UPDATE LAYOUT
+//-------------------------------------------------------------------------
+
+function update() {
+    var link = g.selectAll(".link")
+            .data(links, function(d) { return d.source.id + "&" + d.target.id; });
+
+    link.enter().insert("line")
+            .attr("id",function(d){return d.source.id + "&" + d.target.id;})
+            .attr("stroke",function(d){
+                return color(findAgentIndex(d.source.env));
+            })
+            .attr("stroke-width",1)
+            .attr("class","link");
+
+    //link.transition().delay(function(d){ return d.value }).remove(); //optional remove on timer
+
+    link.exit().remove();
+
+    var node = svg.selectAll(".node")
+            .data(nodes, function(d){ return d.id });
+
+    var nodeEnter = node.enter().append("g")
+            .attr("class", "node")
+            .call(force.drag);
+
+    nodeEnter.append("rect")
+            .attr("width",2)
+            .attr("height",2)
+            .attr("x",0)
+            .attr("y",0)
+            .attr("fill",function(d,i){ return color(d.env) })
+            .attr("id", function(d){ return "Node;" + d.id });
+
+    node.exit().remove();
+
+    for(var i=1; i<=environments.length; i++){
+        sectors[i] = 0;
+        for(var j=0; j<i; j++){
+            sectors[i] += environments[j].agents.length;
+        }
+    }
+    for(var i=1; i<sectors.length; i++){
+        sectors[i] = sectors[i] / nodes.length * 2 * Math.PI;
+    }
+
+    var label = svg.selectAll(".label")
+            .data(environments);
+
+    label.enter().append("text")
+            .text(function(d,i){ return "♦ENV" + i })
+            .attr("class","label")
+            .attr("fill",function(d,i){ return color(i) })
+            .attr("text-anchor","middle")
+            .style("font-size","10px")
+            .style("opacity",1);
+
+    label.exit().remove();
+
+    force.on("tick", function(e) {
+        link    .attr("x1", function(d) { return d.source.x - w/2 + 1 })
+                .attr("y1", function(d) { return d.source.y - h/2 + 1 })
+                .attr("x2", function(d) { return d.target.x - w/2 + 1 })
+                .attr("y2", function(d) { return d.target.y - h/2 + 1 });
+
+        var p_val = "0";
+        var i_val = "0";
+        var k = 0;
+        switch(peripheral){
+            case "non":
+                force.charge(-50);
+                k = 0;
+                p_val = 0;
+                break;
+            case "top":
+                force.charge(-2);
+                k = e.alpha * 0.1;
+                p_val = "sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])";
+                break;
+            case "ind":
+                force.charge(-2);
+                k = e.alpha * 0.1;
+                p_val = "i / nodes.length * 2 * Math.PI";
+                break;
+        }
+        switch(inward){
+            case "non": i_val = 0; break;
+            case "mes": i_val = "o.received"; break;
+        }
+
+        nodes.forEach(function(o,i) {
+            o.x += (w / 2 + Math.cos(eval(p_val)) * (radius - eval(i_val)) - o.x) * k;
+            o.y += (h / 2 + Math.sin(eval(p_val)) * (radius - eval(i_val)) - o.y) * k;
+        });
+
+        node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+
+        label   .attr("x",function(d,i){ return w/2 + Math.cos((sectors[i] + sectors[i+1]) / 2) * (radius * 0.6) })
+                .attr("y",function(d,i){ return h/2 + Math.sin((sectors[i] + sectors[i+1]) / 2) * (radius * 0.6) })
+                .style("opacity",function(d,i){
+                    if(environments[i].agents.length > 0){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+                });
+    });
+
+
+    force
+            .linkStrength(0)
+            .linkDistance(50)
+            .size([w,h])
+            .start();
+
+}
+update();
+
+//-------------------------------------------------------------------------
+//BUTTONS
+//-------------------------------------------------------------------------
+
+var peripheral;
+var inward;
+
+d3.selectAll(".pbtn")
+
+d3.select("#p_non")
+        .on("click",function(){
+            setPeripheral("non");
+        });
+d3.select("#p_top")
+        .on("click",function(){
+            setPeripheral("top");
+        });
+d3.select("#p_ind")
+        .on("click",function(){
+            setPeripheral("ind");
+        });
+d3.select("#i_non")
+        .on("click",function(){
+            setInward("non");
+        });
+d3.select("#i_mes")
+        .on("click",function(){
+            setInward("mes");
+        });
+
+var setPeripheral = function(setting){
+    peripheral = setting;
+    d3.selectAll(".pbtn").attr("class","pbtn btn");
+    d3.select("#p_" + setting).attr("class","pbtn btn active");
+    update();
+}
+
+var setInward = function(setting){
+    inward = setting;
+    d3.selectAll(".ibtn").attr("class","ibtn btn");
+    d3.select("#i_" + setting).attr("class","ibtn btn active");
+    update();
+}
+
+setPeripheral("non");
+setInward("non");
+
+//-------------------------------------------------------------------------
+//OUTER RINGS
+//-------------------------------------------------------------------------
+
+
+setInterval(function(){
+    if(peripheral != "top"){
+        d3.selectAll(".segment").remove();
+        return;
+    }
+    var cur;
+    var n = 0;
+    var region;
+    var layers = 0;
+    d3.selectAll(".segment").filter(function(d,i){ return i < (d3.selectAll(".segment").size() - ((segments.length + 1) * 2)) }).remove();
+    for(var i=0; i<environments.length; i++){
+        if(environments[i].ippath.length > layers){
+            layers = environments[i].ippath.length;
+        }
+    }
+    for(layer=0; layer<layers; layer++){
+        cur = environments[n].ippath[layer];
+        region = (radius * 0.6) + (radius / 28) * (5 - (layer + 1));
+        segments[n] = g.append("path")
+                .datum({innerRadius: region, outerRadius: region*1.04, startAngle: Math.PI/2, endAngle: Math.PI/2})
+                .style("fill",rings(n))
+                .attr("d",arc)
+                .attr("class","segment");
+        var start = Math.PI/2;
+        var end = Math.PI/2;
+        for(var j=0; j<environments.length; j++){
+            if(cur != environments[j].ippath[layer]){
+                end = sectors[j] + Math.PI/2;
+                segments[n].transition().duration(2000).call(arcTween, end);
+                cur = environments[j].ippath[layer];
+                start = end;
+                n++;
+                segments[n] = g.append("path")
+                        .datum({innerRadius: region, outerRadius: region*1.04, startAngle: start, endAngle: end})
+                        .style("fill",rings(n))
+                        .attr("d",arc)
+                        .attr("class","segment");
+            }
+        }
+        end = sectors[j] + Math.PI/2;
+        segments[n].transition().duration(2000).call(arcTween, end);
+        n++;
+    }
+},1000);
+
+function arcTween(transition, newAngle) {
+    transition.attrTween("d",function(d){
+        var interpolate = d3.interpolate(d.endAngle, newAngle);
+        return function(t) {
+            d.endAngle = interpolate(t);
+            return arc(d);
+        }
+    })
+}
+
+//-------------------------------------------------------------------------
+//CUSTOM CODE
+//-------------------------------------------------------------------------
+
+addEnvironment("first","172.16.2.101");
+addEnvironment("second","172.16.1.101");
+addEnvironment("third","172.16.2.102");
+addEnvironment("fourth","172.16.1.102");
+addEnvironment("fifth","200.1");
+
+for(var i=0; i<21; i++){
+    addAgent(i,"first");
+}
+
+var interval = 0;
+setInterval(function(){
+    switch(interval++){
+        case 1:
+            for(var i=21; i<28; i++){
+                addAgent(i,"second");
+            } break;
+        case 2:
+            for(var i=21; i<28; i++){
+                sendMessage(i,10,'0');
+            } break;
+        case 3:
+            for(var i=28; i<100; i++){
+                addAgent(i,"third");
+            } break;
+        case 4:
+            for(var i=100; i<150; i++){
+                addAgent(i,"fourth");
+            } break;
+        case 5: addAgent("green guy","fifth"); break;
+        case 6: sendMessage(10,60,'0'); break;
+        case 7: sendMessage(60,80,'0'); break;
+        case 8: sendMessage(25,60,'0'); break;
+        case 9:
+            for(var i=100; i<150; i++){
+                removeAgent(i);
+            } break;
+        case 10:
+            for(var i=28; i<100; i++){
+                removeAgent(i);
+            } break;
+        case 11: removeAgent("green guy"); break;
+    }
+},2000);
+
+
+</script>

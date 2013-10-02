@@ -34,45 +34,7 @@
 
 <script>
 
-    var peripheral;
-    var inward;
-    setPeripheral("non");
-    setInward("non");
 
-    d3.selectAll(".pbtn")
-
-    d3.select("#p_non")
-            .on("click",function(){
-                setPeripheral("non");
-            });
-    d3.select("#p_top")
-            .on("click",function(){
-                setPeripheral("top");
-            });
-    d3.select("#p_ind")
-            .on("click",function(){
-                setPeripheral("ind");
-            });
-    d3.select("#i_non")
-            .on("click",function(){
-                setInward("non");
-            });
-    d3.select("#i_mes")
-            .on("click",function(){
-                setInward("mes");
-            });
-
-    function setPeripheral(setting){
-        peripheral = setting;
-        d3.selectAll(".pbtn").attr("class","pbtn btn");
-        d3.select("#p_" + setting).attr("class","pbtn btn active");
-    }
-
-    function setInward(setting){
-        inward = setting;
-        d3.selectAll(".ibtn").attr("class","ibtn btn");
-        d3.select("#i_" + setting).attr("class","ibtn btn active");
-    }
 
     var w = window.innerWidth - 50;
     var h = window.innerHeight - 50;
@@ -87,14 +49,13 @@
     var environments = [];
     var sectors = [0];
     var segments = [];
-
     var arc = d3.svg.arc();
 
     setInterval(function(){
-        if(peripheral != "top"){
+        /*if(peripheral != "top"){
             d3.selectAll(".segment").remove();
             return;
-        }
+        }*/
         var cur;
         var n = 0;
         var region;
@@ -171,7 +132,7 @@
             if(typeof env != "number"){
                 env = findEnvironmentIndex(env) + 1;
             };
-            nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1, "received": 0});
+            nodes.push({"id": id, "env": env, "ind": environments[env].agents.length + 1, "received": Math.random()*400});
             environments[env].agents.push(findAgent(id));
             update();
         }
@@ -194,7 +155,7 @@
         this.sendMessage = function(source, target, value) {
             var source = findAgent(source);
             links.push({"source": source, "target": findAgent(target), "value": value});
-            source.received++;
+            //source.received += 50;
             update();
         }
 
@@ -272,27 +233,35 @@
                         .attr("x2", function(d) { return d.target.x - w/2 + 1 })
                         .attr("y2", function(d) { return d.target.y - h/2 + 1 });
 
-                var monVal = 0;
-
-                var k = e.alpha * 0.1;
+                var p_val = "0";
+                var i_val = "0";
+                var k = 0;
                 switch(peripheral){
                     case "non":
-                            force.charge(-50);
+                        force.charge(-50);
+                        k = 0;
+                        p_val = 0;
                         break;
                     case "top":
-                            force.charge(-2);
-                        nodes.forEach(function(o) {
-                            o.x += (w / 2 + Math.cos(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.x) * k;
-                            o.y += (h / 2 + Math.sin(sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])) * (radius - monVal) - o.y) * k;
-                        }); break;
+                        force.charge(-2);
+                        k = e.alpha * 0.1;
+                        p_val = "sectors[o.env] + (o.ind / environments[o.env].agents.length) * (sectors[o.env+1] - sectors[o.env])";
+                        break;
                     case "ind":
-                            force.charge(-2);
-                        nodes.forEach(function(o,i) {
-                            o.x += (w / 2 + Math.cos(i) * (radius - monVal) - o.x) * k;
-                            o.y += (h / 2 + Math.sin(i) * (radius - monVal) - o.y) * k;
-                        }); break;
+                        force.charge(-2);
+                        k = e.alpha * 0.1;
+                        p_val = "i / nodes.length * 2 * Math.PI";
+                        break;
+                }
+                switch(inward){
+                    case "non": i_val = 0; break;
+                    case "mes": i_val = "o.received"; break;
                 }
 
+                nodes.forEach(function(o,i) {
+                    o.x += (w / 2 + Math.cos(eval(p_val)) * (radius - eval(i_val)) - o.x) * k;
+                    o.y += (h / 2 + Math.sin(eval(p_val)) * (radius - eval(i_val)) - o.y) * k;
+                });
 
                 node    .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
 
@@ -316,6 +285,49 @@
 
         }
         update();
+
+        var peripheral;
+        var inward;
+
+        d3.selectAll(".pbtn")
+
+        d3.select("#p_non")
+                .on("click",function(){
+                    setPeripheral("non");
+                });
+        d3.select("#p_top")
+                .on("click",function(){
+                    setPeripheral("top");
+                });
+        d3.select("#p_ind")
+                .on("click",function(){
+                    setPeripheral("ind");
+                });
+        d3.select("#i_non")
+                .on("click",function(){
+                    setInward("non");
+                });
+        d3.select("#i_mes")
+                .on("click",function(){
+                    setInward("mes");
+                });
+
+        var setPeripheral = function(setting){
+            peripheral = setting;
+            d3.selectAll(".pbtn").attr("class","pbtn btn");
+            d3.select("#p_" + setting).attr("class","pbtn btn active");
+            update();
+        }
+
+        var setInward = function(setting){
+            inward = setting;
+            d3.selectAll(".ibtn").attr("class","ibtn btn");
+            d3.select("#i_" + setting).attr("class","ibtn btn active");
+            update();
+        }
+
+        setPeripheral("non");
+        setInward("non");
     }
 
     var graph = new graph();
