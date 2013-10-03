@@ -49,6 +49,7 @@ if (Meteor.isClient) {
       {
         'click input.addagent': function()
         {
+          console.log("in addagent");
           Envs.update(Session.get("selected_env"), {$inc: {numAgents: 1}} );
         }
       });
