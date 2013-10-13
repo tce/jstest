@@ -1,0 +1,86 @@
+<head>
+  <title>pages</title>
+</head>
+
+<body>
+</body>
+
+
+<template name="layout">
+    <nav>
+         <div id="headerBar" data-role="header" data-theme="none">
+            <ul class="nav-bar header-nav-bar">
+                <li><a href="{{pathFor 'home'}}">Home</a></li>
+                <li><a href="{{pathFor 'hello'}}">Hello</a></li>
+                <li><a href="{{pathFor 'test'}}">Test</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="main">
+        {{yield}}
+    </section>
+</template>
+
+<template name="home">
+    <h1>Home</h1>
+
+  <div class="home">
+    {{#each env}}
+      {{> env}}
+    {{/each}}
+  </div>
+
+  {{#if selected_name}}
+  <div class="details">
+    <div class="name">{{selected_name}}</div>
+      {{#each agt}}
+        {{> agt}}
+      {{/each}}
+    <input type="button" class="inc" value="Add 5 agents" />
+  </div>
+  {{/if}}
+
+  {{#unless selected_name}}
+  <div class="none">Click an Environment to select</div>
+  {{/unless}}
+
+</template>
+
+
+<template name="env">
+  <div class="env {{selected}}">
+    <span class="mira_label">{{mira_label}}</span>
+    <span class="numAgents">{{numAgents}}</span>
+      <input type="button" class="addagent" value="Add agent"/>
+  </div>
+</template>
+
+<template name="agt">
+    <div class="agt {{selected}}">
+        <span class="agent_name">{{agent_name}}</span>
+        <span class="host_env_name">{{host_env_name}}</span>
+        <span class="create_env_name">{{create_env_name}}</span>
+        <input type="button" class="moveagent" value="Move agent"/>
+    </div>
+</template>
+
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{> packbody}}
+  <input type="button" value="Click" />
+</template>
+
+<template name="packbody">
+    <div id="pack-area"><svg> </svg></div>
+</template>
+
+<template name="test">
+    <h1>Test</h1>
+    {{> testbody}}
+</template>
+
+<template name="testbody">
+    <div id="d3-area"><svg>  </svg></div>
+</template>
+

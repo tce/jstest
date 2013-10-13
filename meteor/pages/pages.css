@@ -1,0 +1,247 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    margin: 50px 0;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#d3-area{
+    width: 600px;
+    height: 150px;
+    color:#ffffcc;
+}
+
+#outer {
+    width: 600px;
+    margin: 0 auto;
+}
+.env {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.env .mira_label {
+    display: inline-block;
+    width: 300px;
+    font-size: 1.75em;
+}
+
+.env .numAgents {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-size: 2em;
+    font-weight: bold;
+    color: #777;
+}
+
+.agt {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.agt .agent_name {
+    display: inline-block;
+    width: 250px;
+    font-size:0.6em
+
+}
+
+.agt .host_env_name {
+    display: inline-block;
+    width: 100px;
+    font-size: 0.4em;
+}
+
+.agt .create_env_name {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-size: 0.4em;
+    font-weight: bold;
+    color: #777;
+}
+
+
+
+.env.selected {
+    background-color: yellow;
+}
+
+.env.selected .score {
+    color: black;
+}
+
+.agt.selected {
+    background-color: green;
+}
+
+.details, .none {
+    font-weight: bold;
+    font-size: 2em;
+    border-style: dashed none none none;
+    border-color: #ccc;
+    border-width: 4px;
+    margin: 50px 10px;
+    padding: 10px 0px;
+}
+
+.none {
+    color: #777;
+}
+
+.inc {
+  cursor: pointer;
+}
+
+.moveagent {
+  cursor: pointer;
+}
+
+.addagent {
+  cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+input {
+    font-size: 100%;
+}
+
+a, a:visited, a:active {
+    color: #258;
+}
+
+h3 {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 120%;
+    padding: 8px 6px;
+    text-align: center;
+}
+
+#help {
+    padding: 8px;
+}
+
+.header-nav-bar{
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+    height: 40px;
+    background: #4D4D4D;
+    z-index: 1000;
+}
+#login-buttons a, a:visited, a:active {
+    color: #cccccc;
+}
+
+
+.nav-bar li{
+    z-index: 1000;
+    background: #4D4D4D;
+}
+#login-buttons{
+    z-index: 1000;
+}
+
+.sidebar{
+    top: 40px;
+}
+.tag {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    background: #999;
+    color: #fff;
+    border-radius: 4px;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+
+    opacity: 1;
+    transition: opacity 0.3s linear;
+    -moz-transition: opacity 0.3s linear;
+    -webkit-transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear;
+
+    position: relative;
+}
+.pictograph-icon {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+    font-weight: bold;
+    color: #999999;
+    border-radius: 4px;
+    font-size: 2em;
+    position: relative;
+}
+.pictograph-icon:hover {
+    color: #4682b4;
+}
+
+#tag-filter .label {
+    float: left;
+    margin-top: 9px;
+    margin-left: 12px;
+    margin-right: 8px;
+}
+
+#tag-filter .tag {
+    margin-top: 10px;
+    border: 1px solid #777;
+}
+
+#tag-filter .selected {
+    background: #69d;
+}
+
+#tag-filter .count {
+    font-weight: normal;
+    padding-left: 2px;
+}
+
+
+.footer-nav-bar{
+    position: absolute;
+    top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    visibility: visible;
+    height: 40px;
+    height: 40px;
+    width: 100%;
+    z-index: 1000;
+}
+.bottom-anchor{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+ul.inline-list > li{
+    margin-left: 0px;
+}
+.anchorImage{
+    position: fixed;
+    right: -200px;
+    top: 0px;
+    z-index: -1;
+}
+
+.node {
+    cursor: pointer;
+    hand: pointer;
+}
+
